@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --fonte-geral: font-family: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--fonte-geral);
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 50px;
+  background-color: #fcfbfa;
+}
+
+#caixa {
+  font-family: "Exo 2", sans-serif;
+  width: 500px;
+  font-size: 20px;
+}
+
+#valor {
+  font-family: var(--fonte-geral);
+  border: 0 solid transparent;
+  background-color: #fcfbfa;
+  text-align: center;
+  width: 150px;
+  margin: 0 20px;
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+  border: solid 1px transparent;
+  padding: 20px 80px;
+  box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
+  font-size: 25px;
+}
+
+.container-botoes {
+  font-family: var(--fonte-geral);
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #cfdbbf;
+  transition: 0.5s;
+}
+
+.container-botoes:hover {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  background-color: #ddeccb;
+}
+
+.container__botoes__Secundarios {
+  display: flex;
+  justify-content: space-between;
+  width: 35vw;
+  border: solid 1px transparent;
+  padding: 20px 60px;
+  box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
+  font-size: 25px;
+}
+
+/* #valor {
+  font-size: 20px;
+} */
+
+.container__porcentagem {
+  display: flex;
+  justify-content: center;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  width: 30vw;
+  border: solid 2px #000;
+  border-radius: 20px;
+  padding: 30px 30px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#porcentagem {
+  font-family: "Orbitron", sans-serif;
+  font-size: 35px;
+}
+
+.container__resposta {
+  display: none;
+  color: red;
+  width: 30vw;
+  border: solid 2px #000;
+  margin: 20px;
+  font-size: 20px;
+}
+
+#resposta {
+  font-family: var(--fonte-geral);
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 10px;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+  <head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./img/limpeza.png" type="image/png" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <title>Limpeza de dados 1.0</title>
+  </head>
+  <body>
+    <input id="caixa" type="text" placeholder="Cole ou digite os dados" />
+    <div class="container__botoes__Secundarios">
+      <input
+        class="container-botoes"
+        id="anterior"
+        type="button"
+        value="Anterior"
+      />
+      <!-- <span id="valor" autofocus></span> -->
+      <input type="text" id="valor" value="Texto para copiar" readonly />
+      <input
+        class="container-botoes"
+        id="proximo"
+        type="button"
+        value="Proximo"
+      />
+    </div>
+    <div class="container">
+      <input
+        class="container-botoes"
+        id="botao"
+        type="button"
+        value="listar os dados"
+      />
+      <input
+        class="container-botoes"
+        id="botaoMais"
+        type="button"
+        value="Adicionar"
+      />
+      <input
+        class="container-botoes"
+        id="limpaLocal"
+        type="button"
+        value="Limpar Dados"
+      />
+      <input
+        class="container-botoes"
+        id="umaOcorrencia"
+        type="button"
+        value="Manter uma Ocorrencia"
+      />
+      <input
+        class="container-botoes"
+        id="zeroOcorrencia"
+        type="button"
+        value="Eliminar duplicata"
+      />
+    </div>
+    <div class="container__porcentagem">
+      <p id="porcentagem"></p>
+    </div>
+    <div class="container__resposta">
+      <pre id="resposta"></pre>
+    </div>
+    <script src="./scripts/classeJs.js"></script>
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
