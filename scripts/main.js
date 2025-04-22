@@ -112,6 +112,8 @@ function manterOcorrencia() {
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
 
   alert("Reduziu o tempo de análise em: " + porcentagemIguais);
+
+  localStorage.setItem("dados", lista);
 }
 
 function eliminarOcorrencia() {
@@ -125,22 +127,27 @@ function eliminarOcorrencia() {
       acumulador.push(lista[i]);
       lista.splice(valor2, 1);
       i = 0;
-      contaIguais++;
-    } else {
-      let controle = acumulador[0];
-      for (let j = 0; j < acumulador.length; j++) {
-        let valor3 = lista.indexOf(controle);
-        lista.splice(valor3, 1);
-        contaIguais++;
-      }
     }
+
+     // Usando filter para remover todas as ocorrências de `valorARemover`
+     let listaDadosFiltrados = lista.filter(item => !acumulador.includes(item));
+
+
+     if(listaDadosFiltrados.length === 0){
+       lista = 0;
+     }else{
+       
+       lista = listaDadosFiltrados;
+     }
   }
 
-  const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
+  const RESULTADO = (lista.length / recebeTamanhoDaLista) * 100;
 
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
 
   alert("Reduziu o tempo de análise em: " + porcentagemIguais);
+
+  localStorage.setItem("dados", lista);
 }
 
 function listarDados() {
