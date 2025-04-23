@@ -22,9 +22,9 @@ function adicionaDadosCarregamento() {
   let palavra = document.getElementById("caixa").value;
 
   palavra += " ";
-
+  
   let valorArmazenado = localStorage.getItem("dados");
-
+  
   if (
     (valorArmazenado === " " || valorArmazenado === null) &&
     palavra !== " "
@@ -36,7 +36,7 @@ function adicionaDadosCarregamento() {
     palavra !== " "
   ) {
     palavra = valorArmazenado + palavra;
-
+    
     localStorage.setItem("dados", palavra);
   } else if (
     (valorArmazenado !== null && valorArmazenado !== " ") ||
@@ -53,15 +53,16 @@ function adicionaDadosCarregamento() {
       valor = "";
     }
   }
+
 }
 
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
 
   palavra += " ";
-
+  
   let valorArmazenado = localStorage.getItem("dados");
-
+  
   if (
     (valorArmazenado === " " || valorArmazenado === null) &&
     palavra !== " "
@@ -73,7 +74,7 @@ function adicionaDados() {
     palavra !== " "
   ) {
     palavra = valorArmazenado + palavra;
-
+    
     localStorage.setItem("dados", palavra);
   } else if (
     (valorArmazenado !== null && valorArmazenado !== " ") ||
@@ -91,8 +92,22 @@ function adicionaDados() {
       valor = "";
     }
   }
-
+  
   document.getElementById("caixa").value = "";
+}
+
+
+
+function listarDados() {
+  let resultado = document.getElementById("resposta");
+  let caixaResultado = document.querySelector(".container__resposta");
+
+  if (lista.length === 0) {
+    alert("Sem dados para listar!");
+  } else {
+    caixaResultado.style.display = "block";
+    resultado.textContent = lista;
+  }
 }
 
 function manterOcorrencia() {
@@ -108,13 +123,14 @@ function manterOcorrencia() {
     }
   }
   const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
-
+  
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
-
+  
   alert("Reduziu o tempo de análise em: " + porcentagemIguais);
-
+  
   localStorage.setItem("dados", lista);
 }
+
 
 function eliminarOcorrencia() {
   let contaIguais = 0;
@@ -133,11 +149,8 @@ function eliminarOcorrencia() {
      let listaDadosFiltrados = lista.filter(item => !acumulador.includes(item));
 
 
-     if(listaDadosFiltrados.length === 0){
-       lista = 0;
-     }else{
-       
-       lista = listaDadosFiltrados;
+     if(listaDadosFiltrados.length >= 0){
+        lista = listaDadosFiltrados;
      }
   }
 
@@ -150,18 +163,6 @@ function eliminarOcorrencia() {
   localStorage.setItem("dados", lista);
 }
 
-function listarDados() {
-  let resultado = document.getElementById("resposta");
-  let caixaResultado = document.querySelector(".container__resposta");
-
-  if (lista.length === 0) {
-    alert("Sem dados para listar!");
-  } else {
-    caixaResultado.style.display = "block";
-    resultado.textContent = lista;
-  }
-  console.log(lista);
-}
 
 function proximo() {
   let valor = document.getElementById("valor");
@@ -205,6 +206,10 @@ function limpaDados() {
   localStorage.removeItem("dados");
   localStorage.removeItem("local");
   //   localStorage.clear();
+
+  window.location.reload();
+
+  alert("Dados apagados!");
 }
 
 let btLimpaLocal = document.getElementById("limpaLocal");
