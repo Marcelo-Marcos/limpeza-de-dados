@@ -4,6 +4,7 @@ let contador = Number(localStorage.getItem("local"));
 let acumulador = [];
 let porcentagem = document.getElementById("porcentagem");
 porcentagem.innerText = 0 + "%";
+let controladorDeRegistro = 0;
 
 //   adicionaDadosCarregamento();
 //   listarDados();
@@ -19,84 +20,90 @@ window.onload = () => {
 };
 
 function adicionaDadosCarregamento() {
-  let palavra = document.getElementById("caixa").value;
-
-  palavra += " ";
-  
   let valorArmazenado = localStorage.getItem("dados");
-  
-  if (
-    (valorArmazenado === " " || valorArmazenado === null) &&
-    palavra !== " "
-  ) {
-    localStorage.setItem("dados", palavra);
-  } else if (
-    valorArmazenado !== " " &&
-    valorArmazenado !== null &&
-    palavra !== " "
-  ) {
-    palavra = valorArmazenado + palavra;
-    
-    localStorage.setItem("dados", palavra);
-  } else if (
-    (valorArmazenado !== null && valorArmazenado !== " ") ||
-    palavra === " "
-  ) {
-    palavra = valorArmazenado;
-  }
 
-  for (let i = 0; i < palavra.length; i++) {
-    if (palavra[i] !== " " && palavra[i] !== ",") {
-      valor += palavra[i];
-    } else {
-      lista.push(valor);
-      valor = "";
+  controladorDeRegistro = Number(localStorage.getItem("controle"));
+
+  if (controladorDeRegistro !== valorArmazenado.length) {
+    let palavra = valorArmazenado + " ";
+
+    localStorage.setItem("dados", palavra);
+
+    for (let i = 0; i < palavra.length; i++) {
+      if (palavra[i] !== " " && palavra[i] !== ",") {
+        valor += palavra[i];
+      } else {
+        lista.push(valor);
+        valor = "";
+      }
+    }
+    controladorDeRegistro = valorArmazenado.length + 1;
+
+    localStorage.setItem("controle", controladorDeRegistro);
+  } else {
+    let palavra = valorArmazenado;
+
+    localStorage.setItem("dados", palavra);
+
+    for (let i = 0; i < palavra.length; i++) {
+      if (palavra[i] !== " " && palavra[i] !== ",") {
+        valor += palavra[i];
+      } else {
+        lista.push(valor);
+        valor = "";
+      }
     }
   }
-
 }
 
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
-
   palavra += " ";
-  
-  let valorArmazenado = localStorage.getItem("dados");
-  
-  if (
-    (valorArmazenado === " " || valorArmazenado === null) &&
-    palavra !== " "
-  ) {
-    localStorage.setItem("dados", palavra);
-  } else if (
-    valorArmazenado !== " " &&
-    valorArmazenado !== null &&
-    palavra !== " "
-  ) {
-    palavra = valorArmazenado + palavra;
-    
-    localStorage.setItem("dados", palavra);
-  } else if (
-    (valorArmazenado !== null && valorArmazenado !== " ") ||
-    palavra === " "
-  ) {
-    alert("Insira algum dado!");
-    palavra = valorArmazenado;
-  }
 
-  for (let i = 0; i < palavra.length; i++) {
-    if (palavra[i] !== " " && palavra[i] !== ",") {
-      valor += palavra[i];
-    } else {
-      lista.push(valor);
-      valor = "";
+  let valorArmazenado = localStorage.getItem("dados");
+
+  if (palavra.length > 1) {
+    if (
+      (valorArmazenado === " " || valorArmazenado === null) &&
+      palavra !== " "
+    ) {
+      for (let i = 0; i < palavra.length; i++) {
+        if (palavra[i] !== " " && palavra[i] !== ",") {
+          valor += palavra[i];
+        } else {
+          lista.push(valor);
+          valor = "";
+        }
+      }
+      localStorage.setItem("dados", lista);
+    } else if (
+      valorArmazenado !== " " &&
+      valorArmazenado !== null &&
+      palavra !== " " &&
+      palavra !== null
+    ) {
+      valorArmazenado += "," + lista;
+
+      for (let i = 0; i < palavra.length; i++) {
+        if (palavra[i] !== " " && palavra[i] !== ",") {
+          valor += palavra[i];
+        } else {
+          lista.push(valor);
+          valor = "";
+        }
+      }
+      localStorage.setItem("dados", lista);
+    } else if (
+      (valorArmazenado !== null && valorArmazenado !== " ") ||
+      palavra === " "
+    ) {
+      alert("Insira algum dado!");
+      palavra = valorArmazenado;
     }
   }
-  
-  document.getElementById("caixa").value = "";
+  window.location.reload();
+  // document.getElementById("caixa").value = "";
 }
-
-
 
 function listarDados() {
   let resultado = document.getElementById("resposta");
@@ -123,17 +130,21 @@ function manterOcorrencia() {
     }
   }
   const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
-  
+
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
-  
-  alert("Reduziu o tempo de análise em: " + porcentagemIguais);
-  
+
+  alert("Reduziu os dados em: " + porcentagemIguais);
+
   localStorage.setItem("dados", lista);
+
+  // if (isNaN(porcentagemIguais)) {
+  //   localStorage.removeItem("dados");
+  //   localStorage.removeItem("local");
+  // }
+  window.location.reload();
 }
 
-
 function eliminarOcorrencia() {
-  let contaIguais = 0;
   let recebeTamanhoDaLista = lista.length;
   for (let i = 0; i < lista.length; i++) {
     let valor1 = lista.indexOf(lista[i]);
@@ -144,25 +155,28 @@ function eliminarOcorrencia() {
       lista.splice(valor2, 1);
       i = 0;
     }
+  }
+  // Usando filter para remover todas as ocorrências de `acumulador`
+  let listaDadosFiltrados = lista.filter((item) => !acumulador.includes(item));
 
-     // Usando filter para remover todas as ocorrências de `valorARemover`
-     let listaDadosFiltrados = lista.filter(item => !acumulador.includes(item));
-
-
-     if(listaDadosFiltrados.length >= 0){
-        lista = listaDadosFiltrados;
-     }
+  if (listaDadosFiltrados.length === 0) {
+    localStorage.removeItem("dados");
+    localStorage.removeItem("local");
+  } else {
+    lista = listaDadosFiltrados;
+    localStorage.setItem("dados", lista);
   }
 
-  const RESULTADO = (lista.length / recebeTamanhoDaLista) * 100;
+  const RESULTADO =
+    ((recebeTamanhoDaLista - listaDadosFiltrados.length) /
+      recebeTamanhoDaLista) *
+    100;
 
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
 
-  alert("Reduziu o tempo de análise em: " + porcentagemIguais);
-
-  localStorage.setItem("dados", lista);
+  alert("Reduziu os dados em: " + porcentagemIguais);
+  window.location.reload();
 }
-
 
 function proximo() {
   let valor = document.getElementById("valor");
