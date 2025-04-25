@@ -56,10 +56,6 @@ function adicionaDadosCarregamento() {
   }
 }
 
-function mensagem() {
-  alert("Insira algum dado!");
-}
-
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
   palavra += " ";
@@ -80,6 +76,7 @@ function adicionaDados() {
         }
       }
       localStorage.setItem("dados", lista);
+      window.location.reload();
     } else if (
       valorArmazenado !== " " &&
       valorArmazenado !== null &&
@@ -97,6 +94,7 @@ function adicionaDados() {
         }
       }
       localStorage.setItem("dados", lista);
+      window.location.reload();
     } else if (
       (valorArmazenado !== null && valorArmazenado !== " ") ||
       palavra === " "
@@ -105,9 +103,7 @@ function adicionaDados() {
     }
   }
   document.getElementById("caixa").focus();
-  window.location.reload();
-
-  mensagem();
+  alert("Insira algum dado!");
 }
 
 function listarDados() {
