@@ -56,6 +56,10 @@ function adicionaDadosCarregamento() {
   }
 }
 
+function mensagem() {
+  alert("Insira algum dado!");
+}
+
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
   palavra += " ";
@@ -97,12 +101,13 @@ function adicionaDados() {
       (valorArmazenado !== null && valorArmazenado !== " ") ||
       palavra === " "
     ) {
-      alert("Insira algum dado!");
       palavra = valorArmazenado;
     }
   }
+  document.getElementById("caixa").focus();
   window.location.reload();
-  // document.getElementById("caixa").value = "";
+
+  mensagem();
 }
 
 function listarDados() {

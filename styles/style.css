@@ -26,16 +26,6 @@ body {
   font-size: 20px;
 }
 
-#valor {
-  font-family: var(--fonte-geral);
-  border: 0 solid transparent;
-  background-color: #fcfbfa;
-  text-align: center;
-  width: 150px;
-  margin: 0 20px;
-  font-size: 20px;
-}
-
 .container {
   display: flex;
   justify-content: space-between;
@@ -44,6 +34,42 @@ body {
   padding: 20px 80px;
   box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
   font-size: 25px;
+}
+
+.container__botoes__Secundarios {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  height: 80px;
+  border: solid 1px transparent;
+  padding: 10px 50px;
+  box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
+  font-size: 25px;
+}
+
+#valor {
+  font-family: var(--fonte-geral);
+  border: 0 solid transparent;
+  background-color: #fcfbfa;
+  text-align: center;
+  width: 70%;
+  margin: 0 20px;
+  font-size: 20px;
+}
+
+.container-botoes-imagem{
+  background: none; 
+  border: none; 
+  padding: 0; 
+  cursor: pointer;
+}
+
+img{
+  width: 50px;
+}
+
+img:hover {
+  width: 55px;
 }
 
 .container-botoes {
@@ -61,19 +87,9 @@ body {
   background-color: #ddeccb;
 }
 
-.container__botoes__Secundarios {
-  display: flex;
-  justify-content: space-between;
-  width: 35vw;
-  border: solid 1px transparent;
-  padding: 20px 60px;
-  box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
-  font-size: 25px;
+.container-botoes:active {
+  background-color: #ff9900; /* ou a cor que quiser */
 }
-
-/* #valor {
-  font-size: 20px;
-} */
 
 .container__porcentagem {
   display: flex;

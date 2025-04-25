@@ -11,57 +11,39 @@
     />
     <link rel="icon" href="./img/limpeza.png" type="image/png" />
     <link rel="stylesheet" href="styles/style.css" />
-    <title>Limpeza de dados 2.3</title>
+    <title>Limpeza de dados 3.4</title>
   </head>
   <body>
-    <input id="caixa" type="text" placeholder="Cole ou digite os dados" />
+    <input
+      id="caixa"
+      type="text"
+      placeholder="Cole ou digite os dados"
+      autofocus
+    />
     <div class="container__botoes__Secundarios">
-      <input
-        class="container-botoes"
-        id="anterior"
-        type="button"
-        value="Anterior"
-      />
+      <button class="container-botoes-imagem" id="anterior" title="Anterior">
+        <img src="./img/anterior.png" alt="Voltar" />
+      </button>
       <!-- <span id="valor" autofocus></span> -->
       <input type="text" id="valor" value="Texto para copiar" readonly />
-      <input
-        class="container-botoes"
-        id="proximo"
-        type="button"
-        value="Proximo"
-      />
+      <button class="container-botoes-imagem" id="proximo" title="Próximo">
+        <img src="./img/proximo.png" alt="Próximo" />
+      </button>
     </div>
     <div class="container">
-      <input
-        class="container-botoes"
-        id="botao"
-        type="button"
-        value="listar os dados"
-      />
-      <input
-        class="container-botoes"
-        id="botaoMais"
-        type="button"
-        value="Adicionar"
-      />
-      <input
-        class="container-botoes"
-        id="limpaLocal"
-        type="button"
-        value="Limpar Dados"
-      />
-      <input
-        class="container-botoes"
-        id="umaOcorrencia"
-        type="button"
-        value="Manter uma Ocorrencia"
-      />
-      <input
-        class="container-botoes"
-        id="zeroOcorrencia"
-        type="button"
-        value="Eliminar duplicata"
-      />
+      <button class="container-botoes" id="botao">Listar os dados</button>
+
+      <button class="container-botoes" id="botaoMais">Adicionar</button>
+
+      <button class="container-botoes" id="limpaLocal">Limpar Dados</button>
+
+      <button class="container-botoes" id="umaOcorrencia">
+        Manter uma Ocorrência
+      </button>
+
+      <button class="container-botoes" id="zeroOcorrencia">
+        Eliminar duplicata
+      </button>
     </div>
     <div class="container__porcentagem">
       <p id="porcentagem"></p>
