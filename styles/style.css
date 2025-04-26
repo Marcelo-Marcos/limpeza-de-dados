@@ -39,12 +39,11 @@ body {
 .container__botoes__Secundarios {
   display: flex;
   justify-content: space-between;
-  width: 30%;
+  width: 35%;
   height: 80px;
   border: solid 1px transparent;
   padding: 10px 50px;
   box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
-  font-size: 25px;
 }
 
 #valor {
