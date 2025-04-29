@@ -17,25 +17,24 @@ window.onload = () => {
   listarDados();
   let valor = document.getElementById("valor");
   valor.value = lista[contador];
-  if(contador === 0){
+  if (contador === 0) {
     contador++;
-    
+
     const RESULTADO = (contador / lista.length) * 100;
 
-  porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-  contador--;
-}else if((contador+1) === lista.length){
-  contador++;
-  const RESULTADO = (contador / lista.length) * 100;
-
-  porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-  contador--;
-}else{
-    const RESULTADO = ((contador+1) / lista.length) * 100;
-  
     porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-}
-  
+    contador--;
+  } else if (contador + 1 === lista.length) {
+    contador++;
+    const RESULTADO = (contador / lista.length) * 100;
+
+    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    contador--;
+  } else {
+    const RESULTADO = ((contador + 1) / lista.length) * 100;
+
+    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+  }
 };
 
 function adicionaDadosCarregamento() {
@@ -91,13 +90,12 @@ function adicionaDados() {
         if (palavra[i] !== " " && palavra[i] !== ",") {
           valor += palavra[i];
           controleDeFluxo = 0;
-        } else if(palavra[i] === " " || palavra[i] === ","){
-
-          if(controleDeFluxo === 0){
+        } else if (palavra[i] === " " || palavra[i] === ",") {
+          if (controleDeFluxo === 0) {
             lista.push(valor);
             valor = "";
           }
-         
+
           controleDeFluxo = 1;
         }
       }
@@ -116,23 +114,21 @@ function adicionaDados() {
         if (palavra[i] !== " " && palavra[i] !== ",") {
           valor += palavra[i];
           controleDeFluxo = 0;
-        } else if(palavra[i] === " " || palavra[i] === ","){
-
-          if(controleDeFluxo === 0){
+        } else if (palavra[i] === " " || palavra[i] === ",") {
+          if (controleDeFluxo === 0) {
             lista.push(valor);
             valor = "";
           }
-         
+
           controleDeFluxo = 1;
         }
       }
       localStorage.setItem("dados", lista);
       window.location.reload();
     }
-  }
-  else{
+  } else {
     palavra = valorArmazenado;
-    
+
     alert("Insira algum dado!");
   }
   document.getElementById("caixa").focus();
@@ -213,46 +209,44 @@ function eliminarOcorrencia() {
 
 function proximo() {
   let valor = document.getElementById("valor");
- 
-  if ((contador < lista.length) && ((lista.length - contador) > 1)) {
+
+  if (lista[contador] === undefined) {
+    alert("Sem dados para navegar!");
+    contador = contador;
+  } else if (contador < lista.length && lista.length - contador > 1) {
     contador++;
 
     localStorage.setItem("local", contador);
 
-    const RESULTADO = ((contador+1) / lista.length) * 100;
-  
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    const RESULTADO = ((contador + 1) / lista.length) * 100;
 
-  } else if ((contador < lista.length) && ((lista.length - contador) === 1)) {
+    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+  } else if (contador < lista.length && lista.length - contador === 1) {
     // contador++;
 
     localStorage.setItem("local", contador);
 
-    const RESULTADO = ((contador+1) / lista.length) * 100;
-  
+    const RESULTADO = ((contador + 1) / lista.length) * 100;
+
     porcentagem.innerText = RESULTADO.toFixed(2) + "%";
 
     alert("Último dado da lista");
+  } else if (contador === lista.length) {
+    const RESULTADO = (contador / lista.length) * 100;
 
+    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    contador--;
+
+    localStorage.setItem("local", contador);
+  } else {
+    const RESULTADO = (contador / lista.length) * 100;
+
+    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
   }
 
-  else if(contador === lista.length){
-    
-  const RESULTADO = (contador / lista.length) * 100;
-
-  porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-  contador--;
-
-  localStorage.setItem("local", contador);
- 
-  }else{
-    const RESULTADO = (contador / lista.length) * 100;
-  
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-}
-
-
-valor.value = lista[contador];
+  if (lista[contador] !== undefined) {
+    valor.value = lista[contador];
+  }
 
   valor.focus();
   valor.select();
@@ -260,31 +254,36 @@ valor.value = lista[contador];
 
 function anterior() {
   let valor = document.getElementById("valor");
-  if (contador > 0) {
+
+  if (lista.length === 0) {
+    alert("Sem dados para navegar!");
+    contador = contador;
+  } else if (contador > 0) {
     contador--;
 
     localStorage.setItem("local", contador);
-    const RESULTADO = ((contador+1) / lista.length) * 100;
-  
+    const RESULTADO = ((contador + 1) / lista.length) * 100;
+
     porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-  } 
-   else if(contador === 0){
+  } else if (contador === 0) {
     contador++;
     const RESULTADO = (contador / lista.length) * 100;
 
-  porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-  contador--;
-
-  localStorage.setItem("local", contador);
-
-  alert("Primeiro dado da lista");
-}else{
-    const RESULTADO = (contador / lista.length) * 100;
-  
     porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-}
+    contador--;
 
-  valor.value = lista[contador];
+    localStorage.setItem("local", contador);
+
+    alert("Primeiro dado da lista");
+  } else {
+    const RESULTADO = (contador / lista.length) * 100;
+
+    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+  }
+
+  if (lista.length > 0) {
+    valor.value = lista[contador];
+  }
   valor.focus();
   valor.select();
 }
