@@ -158,6 +158,9 @@ function manterOcorrencia() {
       contaIguais++;
     }
   }
+  if(lista[0]===undefined){
+    return;
+  }
   const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
 
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
@@ -191,7 +194,12 @@ function eliminarOcorrencia() {
   if (listaDadosFiltrados.length === 0) {
     localStorage.removeItem("dados");
     localStorage.removeItem("local");
-  } else {
+    
+  }
+  if(lista[0]===undefined){
+    return;
+  }
+  else{
     lista = listaDadosFiltrados;
     localStorage.setItem("dados", lista);
   }
