@@ -94,19 +94,11 @@ function adicionaDados() {
   let valorArmazenado = localStorage.getItem("dados");
 
   if (palavra.length > 1) {
-    if (
-      (valorArmazenado === " " || valorArmazenado === null) &&
-      palavra !== " "
-    ) {
+    if (!valorArmazenado && !palavra) {
       adicionaDadosStringArray(palavra);
       localStorage.setItem("dados", lista);
       window.location.reload();
-    } else if (
-      valorArmazenado !== " " &&
-      valorArmazenado !== null &&
-      palavra !== " " &&
-      palavra !== null
-    ) {
+    } else if (valorArmazenado &&palavra) {
       valorArmazenado += "," + lista;
 
       adicionaDadosStringArray(palavra);
@@ -146,6 +138,7 @@ function manterOcorrencia() {
     }
   }
   if (lista[0] === undefined) {
+    alert("Sem dados na lista!");
     return;
   }
   const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
@@ -179,6 +172,7 @@ function eliminarOcorrencia() {
     localStorage.removeItem("local");
   }
   if (lista[0] === undefined) {
+    alert("Sem dados na lista!");
     return;
   } else {
     lista = listaDadosFiltrados;
