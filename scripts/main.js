@@ -94,7 +94,7 @@ function adicionaDados() {
   let valorArmazenado = localStorage.getItem("dados");
 
   if (palavra.length > 1) {
-    if (!valorArmazenado && !palavra) {
+    if (!valorArmazenado && palavra) {
       adicionaDadosStringArray(palavra);
       localStorage.setItem("dados", lista);
       window.location.reload();
