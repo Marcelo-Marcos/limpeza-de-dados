@@ -6,12 +6,6 @@ let porcentagem = document.getElementById("porcentagem");
 porcentagem.innerText = 0 + "%";
 let controladorDeRegistro = 0;
 
-//   adicionaDadosCarregamento();
-//   listarDados();
-//   let valor = document.getElementById("valor");
-//   valor.textContent = lista[contador];
-// });
-
 window.onload = () => {
   adicionaDadosCarregamento();
   listarDados();
@@ -36,6 +30,26 @@ window.onload = () => {
     porcentagem.innerText = RESULTADO.toFixed(2) + "%";
   }
 };
+
+//De 317 linhas para 308
+function transformaStringArray(valorPalavra) {
+  let controleDeFluxo = 0;
+  let palavra = valorPalavra;
+
+  for (let i = 0; i < palavra.length; i++) {
+    if (palavra[i] !== " " && palavra[i] !== ",") {
+      controleDeFluxo = 0;
+      valor += palavra[i];
+    } else if (palavra[i] === " " || palavra[i] === ",") {
+      if (controleDeFluxo === 0) {
+        lista.push(valor);
+        valor = "";
+      }
+
+      controleDeFluxo = 1;
+    }
+  }
+}
 
 function adicionaDadosCarregamento() {
   let valorArmazenado = localStorage.getItem("dados");
@@ -85,20 +99,7 @@ function adicionaDados() {
       (valorArmazenado === " " || valorArmazenado === null) &&
       palavra !== " "
     ) {
-      let controleDeFluxo = 0;
-      for (let i = 0; i < palavra.length; i++) {
-        if (palavra[i] !== " " && palavra[i] !== ",") {
-          valor += palavra[i];
-          controleDeFluxo = 0;
-        } else if (palavra[i] === " " || palavra[i] === ",") {
-          if (controleDeFluxo === 0) {
-            lista.push(valor);
-            valor = "";
-          }
-
-          controleDeFluxo = 1;
-        }
-      }
+      transformaStringArray(palavra);
       localStorage.setItem("dados", lista);
       window.location.reload();
     } else if (
@@ -109,20 +110,7 @@ function adicionaDados() {
     ) {
       valorArmazenado += "," + lista;
 
-      let controleDeFluxo = 0;
-      for (let i = 0; i < palavra.length; i++) {
-        if (palavra[i] !== " " && palavra[i] !== ",") {
-          valor += palavra[i];
-          controleDeFluxo = 0;
-        } else if (palavra[i] === " " || palavra[i] === ",") {
-          if (controleDeFluxo === 0) {
-            lista.push(valor);
-            valor = "";
-          }
-
-          controleDeFluxo = 1;
-        }
-      }
+      transformaStringArray(palavra);
       localStorage.setItem("dados", lista);
       window.location.reload();
     }
@@ -158,21 +146,17 @@ function manterOcorrencia() {
       contaIguais++;
     }
   }
-  if(lista[0]===undefined){
+  if (lista[0] === undefined) {
     return;
   }
   const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
 
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
 
-  alert("Reduziu os dados em: " + porcentagemIguais);
+  alert("Otimizou os dados em: " + porcentagemIguais);
 
   localStorage.setItem("dados", lista);
 
-  // if (isNaN(porcentagemIguais)) {
-  //   localStorage.removeItem("dados");
-  //   localStorage.removeItem("local");
-  // }
   window.location.reload();
 }
 
@@ -194,12 +178,10 @@ function eliminarOcorrencia() {
   if (listaDadosFiltrados.length === 0) {
     localStorage.removeItem("dados");
     localStorage.removeItem("local");
-    
   }
-  if(lista[0]===undefined){
+  if (lista[0] === undefined) {
     return;
-  }
-  else{
+  } else {
     lista = listaDadosFiltrados;
     localStorage.setItem("dados", lista);
   }
@@ -211,7 +193,7 @@ function eliminarOcorrencia() {
 
   let porcentagemIguais = RESULTADO.toFixed(2) + "%";
 
-  alert("Reduziu os dados em: " + porcentagemIguais);
+  alert("Otimizou os dados em: " + porcentagemIguais);
   window.location.reload();
 }
 
@@ -230,8 +212,6 @@ function proximo() {
 
     porcentagem.innerText = RESULTADO.toFixed(2) + "%";
   } else if (contador < lista.length && lista.length - contador === 1) {
-    // contador++;
-
     localStorage.setItem("local", contador);
 
     const RESULTADO = ((contador + 1) / lista.length) * 100;
@@ -299,7 +279,6 @@ function anterior() {
 function limpaDados() {
   localStorage.removeItem("dados");
   localStorage.removeItem("local");
-  //   localStorage.clear();
 
   window.location.reload();
 
