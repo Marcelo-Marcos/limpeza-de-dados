@@ -28,7 +28,7 @@ window.onload = () => {
   }
 };
 
-//1° refatoração linhas iniciais 317
+//1° e 4° refatoração linhas iniciais 317
 function adicionaDadosStringArray(valorPalavra) {
   let controleDeFluxo = 0;
   let palavra = valorPalavra;
@@ -48,20 +48,6 @@ function adicionaDadosStringArray(valorPalavra) {
   }
 }
 
-//2° refatoração linhas iniciais 317
-function adicionaDadosCarregamentoStringArray(valorPalavra) {
-  let palavra = valorPalavra;
-
-  for (let i = 0; i < palavra.length; i++) {
-    if (palavra[i] !== " " && palavra[i] !== ",") {
-      valor += palavra[i];
-    } else {
-      lista.push(valor);
-      valor = "";
-    }
-  }
-}
-
 function adicionaDadosCarregamento() {
   let valorArmazenado = localStorage.getItem("dados");
 
@@ -72,7 +58,7 @@ function adicionaDadosCarregamento() {
 
     localStorage.setItem("dados", palavra);
 
-    adicionaDadosCarregamentoStringArray(palavra);
+    adicionaDadosStringArray(palavra);
     controladorDeRegistro = valorArmazenado.length + 1;
 
     localStorage.setItem("controle", controladorDeRegistro);
@@ -81,7 +67,7 @@ function adicionaDadosCarregamento() {
 
     localStorage.setItem("dados", palavra);
 
-    adicionaDadosCarregamentoStringArray(palavra);
+    adicionaDadosStringArray(palavra);
   }
 }
 
