@@ -14,19 +14,17 @@ window.onload = () => {
   if (contador === 0) {
     contador++;
 
-()=> resultadoPorcentagem(contador,'+',0,lista.length);
-    
+    resultadoPorcentagem(contador, "+", 0, lista.length);
+
     contador--;
   } else if (contador + 1 === lista.length) {
     contador++;
-    
-   ()=> resultadoPorcentagem(contador,'+',0,lista.length);
-    
+
+    resultadoPorcentagem(contador, "+", 0, lista.length);
+
     contador--;
   } else {
-    
-   ()=> resultadoPorcentagem(contador,'+',1,lista.length);
-    
+    resultadoPorcentagem(contador, "+", 1, lista.length);
   }
 };
 
@@ -55,13 +53,13 @@ function adicionaDadosCarregamentoStringArray(valorPalavra) {
   let palavra = valorPalavra;
 
   for (let i = 0; i < palavra.length; i++) {
-      if (palavra[i] !== " " && palavra[i] !== ",") {
-        valor += palavra[i];
-      } else {
-        lista.push(valor);
-        valor = "";
-      }
+    if (palavra[i] !== " " && palavra[i] !== ",") {
+      valor += palavra[i];
+    } else {
+      lista.push(valor);
+      valor = "";
     }
+  }
 }
 
 function adicionaDadosCarregamento() {
@@ -98,7 +96,7 @@ function adicionaDados() {
       adicionaDadosStringArray(palavra);
       localStorage.setItem("dados", lista);
       window.location.reload();
-    } else if (valorArmazenado &&palavra) {
+    } else if (valorArmazenado && palavra) {
       valorArmazenado += "," + lista;
 
       adicionaDadosStringArray(palavra);
@@ -114,24 +112,14 @@ function adicionaDados() {
 }
 
 //3° refatoração linhas iniciais 317
-function resultadoPorcentagem(numero1, operador1, numero2, numero3){
-  
-  switch (operador1) {
-    case '+':
-      const RESULTADO = ((numero1 + numero2) / numero3) * 100;
-      break;
-      
-      case '-':
-      const RESULTADO = ((numero1 - numero2) / numero3) * 100;
-      break;
-    
-    default:
-alert("Erro na operação!");
-  }
+function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
+  const RESULTADO =
+    operador1 === "+"
+      ? ((numero1 + numero2) / numero3) * 100
+      : ((numero1 - numero2) / numero3) * 100;
 
-porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+  porcentagem.innerText = RESULTADO.toFixed(2) + "%";
 }
-
 
 function listarDados() {
   let resultado = document.getElementById("resposta");
@@ -161,9 +149,9 @@ function manterOcorrencia() {
     alert("Sem dados na lista!");
     return;
   }
-  
-  resultadoPorcentagem(contaIguais,'+',0,recebeTamanhoDaLista)
-  
+
+  resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista);
+
   alert("Otimizou os dados em: " + porcentagemIguais);
 
   localStorage.setItem("dados", lista);
@@ -198,8 +186,12 @@ function eliminarOcorrencia() {
     localStorage.setItem("dados", lista);
   }
 
-
-resultadoPorcentagem(recebeTamanhoDaLista,'-',listaDadosFiltrados,recebeTamanhoDaLista);
+  resultadoPorcentagem(
+    recebeTamanhoDaLista,
+    "-",
+    listaDadosFiltrados,
+    recebeTamanhoDaLista
+  );
 
   alert("Otimizou os dados em: " + porcentagemIguais);
   window.location.reload();
@@ -215,14 +207,13 @@ function proximo() {
     contador++;
 
     localStorage.setItem("local", contador);
-    
-    resultadoPorcentagem(contador,'+',1,lista.length);
 
+    resultadoPorcentagem(contador, "+", 1, lista.length);
   } else if (contador < lista.length && lista.length - contador === 1) {
     localStorage.setItem("local", contador);
 
-resultadoPorcentagem(contador,'+',1,lista.length);
-    
+    resultadoPorcentagem(contador, "+", 1, lista.length);
+
     alert("Último dado da lista");
   } else if (contador === lista.length) {
     const RESULTADO = (contador / lista.length) * 100;
@@ -232,7 +223,7 @@ resultadoPorcentagem(contador,'+',1,lista.length);
 
     localStorage.setItem("local", contador);
   } else {
-resultadoPorcentagem(contador,'+',0,lista.length);
+    resultadoPorcentagem(contador, "+", 0, lista.length);
   }
 
   if (lista[contador] !== undefined) {
@@ -253,22 +244,19 @@ function anterior() {
     contador--;
 
     localStorage.setItem("local", contador);
-    resultadoPorcentagem(contador,'+',1,lista.length);
-    
+    resultadoPorcentagem(contador, "+", 1, lista.length);
   } else if (contador === 0) {
     contador++;
-    
-    resultadoPorcentagem(contador,'+',0,lista.length);
-    
+
+    resultadoPorcentagem(contador, "+", 0, lista.length);
+
     contador--;
 
     localStorage.setItem("local", contador);
 
     alert("Primeiro dado da lista");
   } else {
-    
-    resultadoPorcentagem(contador,'+',0,lista.length);
-    
+    resultadoPorcentagem(contador, "+", 0, lista.length);
   }
 
   if (lista.length > 0) {
