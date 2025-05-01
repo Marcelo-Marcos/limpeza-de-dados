@@ -14,20 +14,19 @@ window.onload = () => {
   if (contador === 0) {
     contador++;
 
-    const RESULTADO = (contador / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+()=> resultadoPorcentagem(contador,'+',0,lista.length);
+    
     contador--;
   } else if (contador + 1 === lista.length) {
     contador++;
-    const RESULTADO = (contador / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    
+   ()=> resultadoPorcentagem(contador,'+',0,lista.length);
+    
     contador--;
   } else {
-    const RESULTADO = ((contador + 1) / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    
+   ()=> resultadoPorcentagem(contador,'+',1,lista.length);
+    
   }
 };
 
@@ -50,6 +49,7 @@ function adicionaDadosStringArray(valorPalavra) {
     }
   }
 }
+
 //2° refatoração linhas iniciais 317
 function adicionaDadosCarregamentoStringArray(valorPalavra) {
   let palavra = valorPalavra;
@@ -113,6 +113,26 @@ function adicionaDados() {
   document.getElementById("caixa").focus();
 }
 
+//3° refatoração linhas iniciais 317
+function resultadoPorcentagem(numero1, operador1, numero2, numero3){
+  
+  switch (operador1) {
+    case '+':
+      const RESULTADO = ((numero1 + numero2) / numero3) * 100;
+      break;
+      
+      case '-':
+      const RESULTADO = ((numero1 - numero2) / numero3) * 100;
+      break;
+    
+    default:
+alert("Erro na operação!");
+  }
+
+porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+}
+
+
 function listarDados() {
   let resultado = document.getElementById("resposta");
   let caixaResultado = document.querySelector(".container__resposta");
@@ -141,10 +161,9 @@ function manterOcorrencia() {
     alert("Sem dados na lista!");
     return;
   }
-  const RESULTADO = (contaIguais / recebeTamanhoDaLista) * 100;
-
-  let porcentagemIguais = RESULTADO.toFixed(2) + "%";
-
+  
+  resultadoPorcentagem(contaIguais,'+',0,recebeTamanhoDaLista)
+  
   alert("Otimizou os dados em: " + porcentagemIguais);
 
   localStorage.setItem("dados", lista);
@@ -179,12 +198,8 @@ function eliminarOcorrencia() {
     localStorage.setItem("dados", lista);
   }
 
-  const RESULTADO =
-    ((recebeTamanhoDaLista - listaDadosFiltrados.length) /
-      recebeTamanhoDaLista) *
-    100;
 
-  let porcentagemIguais = RESULTADO.toFixed(2) + "%";
+resultadoPorcentagem(recebeTamanhoDaLista,'-',listaDadosFiltrados,recebeTamanhoDaLista);
 
   alert("Otimizou os dados em: " + porcentagemIguais);
   window.location.reload();
@@ -200,17 +215,14 @@ function proximo() {
     contador++;
 
     localStorage.setItem("local", contador);
+    
+    resultadoPorcentagem(contador,'+',1,lista.length);
 
-    const RESULTADO = ((contador + 1) / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
   } else if (contador < lista.length && lista.length - contador === 1) {
     localStorage.setItem("local", contador);
 
-    const RESULTADO = ((contador + 1) / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-
+resultadoPorcentagem(contador,'+',1,lista.length);
+    
     alert("Último dado da lista");
   } else if (contador === lista.length) {
     const RESULTADO = (contador / lista.length) * 100;
@@ -220,9 +232,7 @@ function proximo() {
 
     localStorage.setItem("local", contador);
   } else {
-    const RESULTADO = (contador / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+resultadoPorcentagem(contador,'+',0,lista.length);
   }
 
   if (lista[contador] !== undefined) {
@@ -243,23 +253,22 @@ function anterior() {
     contador--;
 
     localStorage.setItem("local", contador);
-    const RESULTADO = ((contador + 1) / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    resultadoPorcentagem(contador,'+',1,lista.length);
+    
   } else if (contador === 0) {
     contador++;
-    const RESULTADO = (contador / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    
+    resultadoPorcentagem(contador,'+',0,lista.length);
+    
     contador--;
 
     localStorage.setItem("local", contador);
 
     alert("Primeiro dado da lista");
   } else {
-    const RESULTADO = (contador / lista.length) * 100;
-
-    porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+    
+    resultadoPorcentagem(contador,'+',0,lista.length);
+    
   }
 
   if (lista.length > 0) {
