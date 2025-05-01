@@ -117,8 +117,9 @@ function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
     operador1 === "+"
       ? ((numero1 + numero2) / numero3) * 100
       : ((numero1 - numero2) / numero3) * 100;
-
-  porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+      
+  return porcentagem.innerText = RESULTADO.toFixed(2) + "%";
+  
 }
 
 function listarDados() {
@@ -150,9 +151,7 @@ function manterOcorrencia() {
     return;
   }
 
-  resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista);
-
-  alert("Otimizou os dados em: " + porcentagemIguais);
+  alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista));
 
   localStorage.setItem("dados", lista);
 
@@ -186,14 +185,12 @@ function eliminarOcorrencia() {
     localStorage.setItem("dados", lista);
   }
 
-  resultadoPorcentagem(
-    recebeTamanhoDaLista,
-    "-",
-    listaDadosFiltrados,
-    recebeTamanhoDaLista
-  );
-
-  alert("Otimizou os dados em: " + porcentagemIguais);
+  alert("Otimizou os dados em: " + resultadoPorcentagem(
+  recebeTamanhoDaLista,
+  "-",
+  listaDadosFiltrados,
+  recebeTamanhoDaLista
+));
   window.location.reload();
 }
 
