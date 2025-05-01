@@ -188,7 +188,7 @@ function eliminarOcorrencia() {
   alert("Otimizou os dados em: " + resultadoPorcentagem(
   recebeTamanhoDaLista,
   "-",
-  listaDadosFiltrados,
+  listaDadosFiltrados.length,
   recebeTamanhoDaLista
 ));
   window.location.reload();
