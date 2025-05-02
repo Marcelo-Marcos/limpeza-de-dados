@@ -9,7 +9,7 @@ let controladorDeRegistro = 0;
 
 window.onload = () => {
   adicionaDadosCarregamento();
- // adicionaDadosCarregamento2();
+  adicionaDadosCarregamento2();
   listarDados();
   let valor = document.getElementById("valor");
   valor.value = lista[contador];
@@ -92,7 +92,7 @@ function adicionaDadosCarregamento() {
   }
 }
 
-/*function adicionaDadosCarregamento2() {
+function adicionaDadosCarregamento2() {
   let valorArmazenado = localStorage.getItem("dados2");
 
   controladorDeRegistro = Number(localStorage.getItem("controle"));
@@ -113,7 +113,7 @@ function adicionaDadosCarregamento() {
 
     adicionaDadosStringArray2(palavra);
   }
-}*/
+}
 
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
@@ -209,11 +209,12 @@ if (lista[0] === undefined) {
       i = 0;
       contaIguais++;
     }
-    else if (valor1 !== valor2 && valorFuncao === 0) {
-      acumulador.push(lista[i]);
-      lista.splice(valor2, 1);
-      i = 0;
-    }}
+    // else if (valor1 !== valor2 && valorFuncao === 0) {
+    //   acumulador.push(lista[i]);
+    //   lista.splice(valor2, 1);
+    //   i = 0;
+    // }
+    }
     
     if(valorFuncao === 1)
     {
@@ -224,14 +225,17 @@ alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, receb
     }
      else if(valorFuncao === 0)
   {
-        // Usando filter para remover todas as ocorrências de `acumulador`
-  let listaDadosFiltrados = lista.filter((item) => !lista2.includes(item));
+    console.log(lista2[0]);
+        // Usando filter para remover todas as ocorrências de `lista2`
+  let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
   
   if (listaDadosFiltrados.length === 0) {
     localStorage.removeItem("dados");
     localStorage.removeItem("local");
   }
   else {
+
+    // console.log(listaDadosFiltrados);
     lista = listaDadosFiltrados;
     localStorage.setItem("dados", lista);
   
