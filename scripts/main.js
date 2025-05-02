@@ -1,4 +1,5 @@
 let lista = [];
+let lista2 = [];
 let valor = "";
 let contador = Number(localStorage.getItem("local"));
 let acumulador = [];
@@ -8,6 +9,7 @@ let controladorDeRegistro = 0;
 
 window.onload = () => {
   adicionaDadosCarregamento();
+  adicionaDadosCarregamento2();
   listarDados();
   let valor = document.getElementById("valor");
   valor.value = lista[contador];
@@ -40,6 +42,25 @@ function adicionaDadosStringArray(valorPalavra) {
     } else if (palavra[i] === " " || palavra[i] === ",") {
       if (controleDeFluxo === 0) {
         lista.push(valor);
+        valor = "";
+      }
+
+      controleDeFluxo = 1;
+    }
+  }
+}
+
+function adicionaDadosStringArray2(valorPalavra) {
+  let controleDeFluxo = 0;
+  let palavra = valorPalavra;
+
+  for (let i = 0; i < palavra.length; i++) {
+    if (palavra[i] !== " " && palavra[i] !== ",") {
+      controleDeFluxo = 0;
+      valor += palavra[i];
+    } else if (palavra[i] === " " || palavra[i] === ",") {
+      if (controleDeFluxo === 0) {
+        lista2.push(valor);
         valor = "";
       }
 
@@ -97,6 +118,55 @@ function adicionaDados() {
   document.getElementById("caixa").focus();
 }
 
+function adicionaDadosCarregamento2() {
+  let valorArmazenado = localStorage.getItem("dados2");
+
+  controladorDeRegistro = Number(localStorage.getItem("controle"));
+
+  if (controladorDeRegistro !== valorArmazenado.length) {
+    let palavra = valorArmazenado + " ";
+
+    localStorage.setItem("dados2", palavra);
+
+    adicionaDadosStringArray(palavra);
+    controladorDeRegistro = valorArmazenado.length + 1;
+
+    localStorage.setItem("controle", controladorDeRegistro);
+  } else {
+    let palavra = valorArmazenado;
+
+    localStorage.setItem("dados2", palavra);
+
+    adicionaDadosStringArray2(palavra);
+  }
+}
+
+function adicionaDados2() {
+  let palavra = document.getElementById("caixa").value;
+  palavra += " ";
+
+  let valorArmazenado = localStorage.getItem("dados2");
+
+  if (palavra.length > 1) {
+    if (!valorArmazenado && palavra) {
+      adicionaDadosStringArray2(palavra);
+      localStorage.setItem("dados2", lista2);
+      window.location.reload();
+    } else if (valorArmazenado && palavra) {
+      valorArmazenado += "," + lista2;
+
+      adicionaDadosStringArray2(palavra);
+      localStorage.setItem("dados2", lista2);
+      window.location.reload();
+    }
+  } else {
+    palavra = valorArmazenado;
+
+    alert("Insira algum dado!");
+  }
+  document.getElementById("caixa").focus();
+}
+
 //3° refatoração linhas iniciais 317
 function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
   const RESULTADO =
@@ -120,64 +190,61 @@ function listarDados() {
   }
 }
 
-function manterOcorrencia() {
+//5° refatoração linhas iniciais 317
+function eliminaDados(valorFuncao) {
   let contaIguais = 0;
   let recebeTamanhoDaLista = lista.length;
+  
+if (lista[0] === undefined) {
+    alert("Sem dados na lista!");
+    return;
+  } 
+  
   for (let i = 0; i < lista.length; i++) {
     let valor1 = lista.indexOf(lista[i]);
     let valor2 = lista.lastIndexOf(lista[i]);
-    if (valor1 !== valor2) {
+    if (valor1 !== valor2 && valorFuncao === 1) {
       lista.splice(valor2, 1);
       i = 0;
       contaIguais++;
     }
-  }
-  if (lista[0] === undefined) {
-    alert("Sem dados na lista!");
-    return;
-  }
-
-  alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista));
-
-  localStorage.setItem("dados", lista);
-
-  window.location.reload();
-}
-
-function eliminarOcorrencia() {
-  let recebeTamanhoDaLista = lista.length;
-  for (let i = 0; i < lista.length; i++) {
-    let valor1 = lista.indexOf(lista[i]);
-    let valor2 = lista.lastIndexOf(lista[i]);
-
-    if (valor1 !== valor2) {
+    else if (valor1 !== valor2 && valorFuncao === 0) {
       acumulador.push(lista[i]);
       lista.splice(valor2, 1);
       i = 0;
-    }
-  }
-  // Usando filter para remover todas as ocorrências de `acumulador`
-  let listaDadosFiltrados = lista.filter((item) => !acumulador.includes(item));
+    }}
+    
+    if(valorFuncao === 1)
+    {
+      
+alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista));
 
+  localStorage.setItem("dados", lista);
+    }
+     else if(valorFuncao === 0)
+  {
+        // Usando filter para remover todas as ocorrências de `acumulador`
+  let listaDadosFiltrados = lista.filter((item) => !lista2.includes(item) && !acumulador.includes(item));
+  
   if (listaDadosFiltrados.length === 0) {
     localStorage.removeItem("dados");
     localStorage.removeItem("local");
   }
-  if (lista[0] === undefined) {
-    alert("Sem dados na lista!");
-    return;
-  } else {
+  else {
     lista = listaDadosFiltrados;
     localStorage.setItem("dados", lista);
-  }
-
-  alert("Otimizou os dados em: " + resultadoPorcentagem(
+  
+  
+      alert("Otimizou os dados em: " + resultadoPorcentagem(
   recebeTamanhoDaLista,
   "-",
   listaDadosFiltrados.length,
   recebeTamanhoDaLista
 ));
-  window.location.reload();
+    }
+    }
+    window.location.reload();
+    
 }
 
 function proximo() {
@@ -252,6 +319,7 @@ function anterior() {
 function limpaDados() {
   localStorage.removeItem("dados");
   localStorage.removeItem("local");
+  localStorage.removeItem("dados2");
 
   window.location.reload();
 
@@ -273,8 +341,12 @@ botao.addEventListener("click", listarDados);
 let btMais = document.getElementById("botaoMais");
 btMais.addEventListener("click", adicionaDados);
 
+let btMais2 = document.getElementById("botaoMais2");
+btMais2.addEventListener("click", adicionaDados2);
+
+
 let btEliminar = document.getElementById("zeroOcorrencia");
-btEliminar.addEventListener("click", eliminarOcorrencia);
+btEliminar.addEventListener("click", () => eliminaDados(0));
 
 let btManter = document.getElementById("umaOcorrencia");
-btManter.addEventListener("click", manterOcorrencia);
+btManter.addEventListener("click", () => eliminaDados(1));
