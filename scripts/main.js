@@ -9,7 +9,7 @@ let controladorDeRegistro = 0;
 
 window.onload = () => {
   adicionaDadosCarregamento();
-  adicionaDadosCarregamento2();
+ // adicionaDadosCarregamento2();
   listarDados();
   let valor = document.getElementById("valor");
   valor.value = lista[contador];
@@ -92,6 +92,29 @@ function adicionaDadosCarregamento() {
   }
 }
 
+/*function adicionaDadosCarregamento2() {
+  let valorArmazenado = localStorage.getItem("dados2");
+
+  controladorDeRegistro = Number(localStorage.getItem("controle"));
+
+  if (controladorDeRegistro !== valorArmazenado.length) {
+    let palavra = valorArmazenado + " ";
+
+    localStorage.setItem("dados2", palavra);
+
+    adicionaDadosStringArray(palavra);
+    controladorDeRegistro = valorArmazenado.length + 1;
+
+    localStorage.setItem("controle", controladorDeRegistro);
+  } else {
+    let palavra = valorArmazenado;
+
+    localStorage.setItem("dados2", palavra);
+
+    adicionaDadosStringArray2(palavra);
+  }
+}*/
+
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
   palavra += " ";
@@ -118,28 +141,6 @@ function adicionaDados() {
   document.getElementById("caixa").focus();
 }
 
-function adicionaDadosCarregamento2() {
-  let valorArmazenado = localStorage.getItem("dados2");
-
-  controladorDeRegistro = Number(localStorage.getItem("controle"));
-
-  if (controladorDeRegistro !== valorArmazenado.length) {
-    let palavra = valorArmazenado + " ";
-
-    localStorage.setItem("dados2", palavra);
-
-    adicionaDadosStringArray(palavra);
-    controladorDeRegistro = valorArmazenado.length + 1;
-
-    localStorage.setItem("controle", controladorDeRegistro);
-  } else {
-    let palavra = valorArmazenado;
-
-    localStorage.setItem("dados2", palavra);
-
-    adicionaDadosStringArray2(palavra);
-  }
-}
 
 function adicionaDados2() {
   let palavra = document.getElementById("caixa").value;
@@ -224,7 +225,7 @@ alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, receb
      else if(valorFuncao === 0)
   {
         // Usando filter para remover todas as ocorrências de `acumulador`
-  let listaDadosFiltrados = lista.filter((item) => !lista2.includes(item) && !acumulador.includes(item));
+  let listaDadosFiltrados = lista.filter((item) => !lista2.includes(item));
   
   if (listaDadosFiltrados.length === 0) {
     localStorage.removeItem("dados");
