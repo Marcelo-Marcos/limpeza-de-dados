@@ -9,7 +9,6 @@ let controladorDeRegistro = 0;
 
 window.onload = () => {
   adicionaDadosCarregamento();
-  adicionaDadosCarregamento2();
   listarDados();
   let valor = document.getElementById("valor");
   valor.value = lista[contador];
@@ -28,9 +27,9 @@ window.onload = () => {
   } else {
     resultadoPorcentagem(contador, "+", 1, lista.length);
   }
-};
+}
 
-//1° e 4° refatoração linhas iniciais 317
+
 function adicionaDadosStringArray(valorPalavra) {
   let controleDeFluxo = 0;
   let palavra = valorPalavra;
@@ -92,29 +91,6 @@ function adicionaDadosCarregamento() {
   }
 }
 
-function adicionaDadosCarregamento2() {
-  let valorArmazenado = localStorage.getItem("dados2");
-
-  controladorDeRegistro = Number(localStorage.getItem("controle"));
-
-  if (controladorDeRegistro !== valorArmazenado.length) {
-    let palavra = valorArmazenado + " ";
-
-    localStorage.setItem("dados2", palavra);
-
-    adicionaDadosStringArray(palavra);
-    controladorDeRegistro = valorArmazenado.length + 1;
-
-    localStorage.setItem("controle", controladorDeRegistro);
-  } else {
-    let palavra = valorArmazenado;
-
-    localStorage.setItem("dados2", palavra);
-
-    adicionaDadosStringArray2(palavra);
-  }
-}
-
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
   palavra += " ";
@@ -141,7 +117,6 @@ function adicionaDados() {
   document.getElementById("caixa").focus();
 }
 
-
 function adicionaDados2() {
   let palavra = document.getElementById("caixa").value;
   palavra += " ";
@@ -152,23 +127,27 @@ function adicionaDados2() {
     if (!valorArmazenado && palavra) {
       adicionaDadosStringArray2(palavra);
       localStorage.setItem("dados2", lista2);
+      alert(1);
       window.location.reload();
     } else if (valorArmazenado && palavra) {
+     
+      adicionaDadosStringArray2(palavra);
+      
       valorArmazenado += "," + lista2;
 
-      adicionaDadosStringArray2(palavra);
-      localStorage.setItem("dados2", lista2);
+      localStorage.setItem("dados2", valorArmazenado);
+      alert(2);
       window.location.reload();
     }
   } else {
     palavra = valorArmazenado;
 
     alert("Insira algum dado!");
+    alert(3);
   }
   document.getElementById("caixa").focus();
 }
 
-//3° refatoração linhas iniciais 317
 function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
   const RESULTADO =
     operador1 === "+"
@@ -191,7 +170,6 @@ function listarDados() {
   }
 }
 
-//5° refatoração linhas iniciais 317
 function eliminaDados(valorFuncao) {
   let contaIguais = 0;
   let recebeTamanhoDaLista = lista.length;
@@ -209,46 +187,45 @@ if (lista[0] === undefined) {
       i = 0;
       contaIguais++;
     }
-    // else if (valor1 !== valor2 && valorFuncao === 0) {
-    //   acumulador.push(lista[i]);
-    //   lista.splice(valor2, 1);
-    //   i = 0;
-    // }
     }
     
-    if(valorFuncao === 1)
+    if(valorFuncao === 0)
+      {
+
+        lista = localStorage.getItem("dados").split(",").map(Number);
+        lista2 = localStorage.getItem("dados2").split(",").map(Number);
+            // Usando filter para remover todas as ocorrências de `lista2`
+      let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
+      console.log(listaDadosFiltrados);
+      
+      if (listaDadosFiltrados.length === 0) {
+        localStorage.removeItem("dados");
+        localStorage.removeItem("local");
+      }
+      else {
+    
+        
+        lista = listaDadosFiltrados;
+        localStorage.setItem("dados", lista);
+      
+      
+          alert("Otimizou os dados em: " + resultadoPorcentagem(
+      recebeTamanhoDaLista,
+      "-",
+      listaDadosFiltrados.length,
+      recebeTamanhoDaLista
+    ));
+        }
+        }
+    
+    else if(valorFuncao === 1)
     {
       
 alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista));
 
   localStorage.setItem("dados", lista);
     }
-     else if(valorFuncao === 0)
-  {
-    console.log(lista2[0]);
-        // Usando filter para remover todas as ocorrências de `lista2`
-  let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
-  
-  if (listaDadosFiltrados.length === 0) {
-    localStorage.removeItem("dados");
-    localStorage.removeItem("local");
-  }
-  else {
-
-    // console.log(listaDadosFiltrados);
-    lista = listaDadosFiltrados;
-    localStorage.setItem("dados", lista);
-  
-  
-      alert("Otimizou os dados em: " + resultadoPorcentagem(
-  recebeTamanhoDaLista,
-  "-",
-  listaDadosFiltrados.length,
-  recebeTamanhoDaLista
-));
-    }
-    }
-    window.location.reload();
+     window.location.reload();
     
 }
 
@@ -348,7 +325,6 @@ btMais.addEventListener("click", adicionaDados);
 
 let btMais2 = document.getElementById("botaoMais2");
 btMais2.addEventListener("click", adicionaDados2);
-
 
 let btEliminar = document.getElementById("zeroOcorrencia");
 btEliminar.addEventListener("click", () => eliminaDados(0));
