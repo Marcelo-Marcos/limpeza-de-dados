@@ -43,7 +43,6 @@ function adicionaDadosStringArray(valorPalavra) {
         lista.push(valor);
         valor = "";
       }
-
       controleDeFluxo = 1;
     }
   }
@@ -62,7 +61,6 @@ function adicionaDadosStringArray2(valorPalavra) {
         lista2.push(valor);
         valor = "";
       }
-
       controleDeFluxo = 1;
     }
   }
@@ -127,7 +125,6 @@ function adicionaDados2() {
     if (!valorArmazenado && palavra) {
       adicionaDadosStringArray2(palavra);
       localStorage.setItem("dados2", lista2);
-      alert(1);
       window.location.reload();
     } else if (valorArmazenado && palavra) {
      
@@ -136,14 +133,12 @@ function adicionaDados2() {
       valorArmazenado += "," + lista2;
 
       localStorage.setItem("dados2", valorArmazenado);
-      alert(2);
       window.location.reload();
     }
   } else {
     palavra = valorArmazenado;
 
     alert("Insira algum dado!");
-    alert(3);
   }
   document.getElementById("caixa").focus();
 }
@@ -170,9 +165,8 @@ function listarDados() {
   }
 }
 
-function eliminaDados(valorFuncao) {
+function manterOcorrencia() {
   let contaIguais = 0;
-  let recebeTamanhoDaLista = lista.length;
   
 if (lista[0] === undefined) {
     alert("Sem dados na lista!");
@@ -188,46 +182,55 @@ if (lista[0] === undefined) {
       contaIguais++;
     }
     }
-    
-    if(valorFuncao === 0)
-      {
+    mensangemDados(1,contaIguais);
+      }
 
-        lista = localStorage.getItem("dados").split(",").map(Number);
-        lista2 = localStorage.getItem("dados2").split(",").map(Number);
-            // Usando filter para remover todas as ocorrências de `lista2`
-      let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
-      console.log(listaDadosFiltrados);
+function eliminarDados() {
+
+    lista = localStorage.getItem("dados").split(",").map(Number);
+    lista2 = localStorage.getItem("dados2").split(",").map(Number);
+
+  // Usando filter para remover todas as ocorrências de `lista2`
+  let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
+
+  mensangemDados(0,listaDadosFiltrados);
+
+    }
+
+    
+    function mensangemDados(valorFuncao,valorMensagem){
       
-      if (listaDadosFiltrados.length === 0) {
+      let recebeTamanhoDaLista = lista.length;
+
+      if(valorFuncao === 0){
+
+      if (valorMensagem.length === 0) {
         localStorage.removeItem("dados");
         localStorage.removeItem("local");
       }
       else {
     
-        
-        lista = listaDadosFiltrados;
+        lista = valorMensagem;
         localStorage.setItem("dados", lista);
       
       
           alert("Otimizou os dados em: " + resultadoPorcentagem(
       recebeTamanhoDaLista,
       "-",
-      listaDadosFiltrados.length,
+      valorMensagem.length,
       recebeTamanhoDaLista
-    ));
-        }
-        }
-    
-    else if(valorFuncao === 1)
-    {
-      
-alert("Otimizou os dados em: " + resultadoPorcentagem(contaIguais, "+", 0, recebeTamanhoDaLista));
-
-  localStorage.setItem("dados", lista);
+    ))
+            }
+            window.location.reload();
     }
-     window.location.reload();
-    
-}
+    else{
+      alert("Otimizou os dados em: " + resultadoPorcentagem(valorMensagem, "+", 0, recebeTamanhoDaLista));
+        
+          localStorage.setItem("dados", lista);
+          window.location.reload();
+    }
+  
+  }
 
 function proximo() {
   let valor = document.getElementById("valor");
@@ -327,7 +330,7 @@ let btMais2 = document.getElementById("botaoMais2");
 btMais2.addEventListener("click", adicionaDados2);
 
 let btEliminar = document.getElementById("zeroOcorrencia");
-btEliminar.addEventListener("click", () => eliminaDados(0));
+btEliminar.addEventListener("click", eliminarDados);
 
 let btManter = document.getElementById("umaOcorrencia");
-btManter.addEventListener("click", () => eliminaDados(1));
+btManter.addEventListener("click", manterOcorrencia);
