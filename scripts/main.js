@@ -125,6 +125,7 @@ function adicionaDados2() {
     if (!valorArmazenado && palavra) {
       adicionaDadosStringArray2(palavra);
       localStorage.setItem("dados2", lista2);
+      alert("Dados adicionados!");
       window.location.reload();
     } else if (valorArmazenado && palavra) {
      
@@ -133,6 +134,7 @@ function adicionaDados2() {
       valorArmazenado += "," + lista2;
 
       localStorage.setItem("dados2", valorArmazenado);
+      alert("Dados adicionados!");
       window.location.reload();
     }
   } else {
@@ -176,7 +178,7 @@ if (lista[0] === undefined) {
   for (let i = 0; i < lista.length; i++) {
     let valor1 = lista.indexOf(lista[i]);
     let valor2 = lista.lastIndexOf(lista[i]);
-    if (valor1 !== valor2 && valorFuncao === 1) {
+    if (valor1 !== valor2) {
       lista.splice(valor2, 1);
       i = 0;
       contaIguais++;
@@ -187,8 +189,8 @@ if (lista[0] === undefined) {
 
 function eliminarDados() {
 
-    lista = localStorage.getItem("dados").split(",").map(Number);
-    lista2 = localStorage.getItem("dados2").split(",").map(Number);
+    lista = localStorage.getItem("dados").split(",");
+    lista2 = localStorage.getItem("dados2").split(",");
 
   // Usando filter para remover todas as ocorrências de `lista2`
   let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
@@ -311,6 +313,10 @@ function limpaDados() {
   alert("Dados apagados!");
 }
 
+function listaDados2() {
+  alert(localStorage.getItem("dados2").split(","));
+}
+
 let btLimpaLocal = document.getElementById("limpaLocal");
 btLimpaLocal.addEventListener("click", limpaDados);
 
@@ -321,7 +327,7 @@ let btAnterior = document.getElementById("anterior");
 btAnterior.addEventListener("click", anterior);
 
 let botao = document.getElementById("botao");
-botao.addEventListener("click", listarDados);
+botao.addEventListener("click", listaDados2);
 
 let btMais = document.getElementById("botaoMais");
 btMais.addEventListener("click", adicionaDados);
