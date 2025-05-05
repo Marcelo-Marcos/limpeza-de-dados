@@ -6,6 +6,7 @@ let acumulador = [];
 let porcentagem = document.getElementById("porcentagem");
 porcentagem.innerText = 0 + "%";
 let controladorDeRegistro = 0;
+let colunas = 0;
 
 window.onload = () => {
   adicionaDadosCarregamento();
@@ -28,7 +29,6 @@ window.onload = () => {
     resultadoPorcentagem(contador, "+", 1, lista.length);
   }
 }
-
 
 function adicionaDadosStringArray(valorPalavra) {
   let controleDeFluxo = 0;
@@ -91,12 +91,12 @@ function adicionaDadosCarregamento() {
 
 function adicionaDados() {
   let palavra = document.getElementById("caixa").value;
-  palavra += " ";
+   palavra += " ";
 
   let valorArmazenado = localStorage.getItem("dados");
 
-  if (palavra.length > 1) {
-    if (!valorArmazenado && palavra) {
+  if (palavra.length > 0) {
+    if (!valorArmazenado) {
       adicionaDadosStringArray(palavra);
       localStorage.setItem("dados", lista);
       window.location.reload();
@@ -112,6 +112,7 @@ function adicionaDados() {
 
     alert("Insira algum dado!");
   }
+  console.log(palavra)
   document.getElementById("caixa").focus();
 }
 
@@ -154,18 +155,48 @@ function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
   return porcentagem.innerText = RESULTADO.toFixed(2) + "%";
   
 }
-
+  
 function listarDados() {
+  
   let resultado = document.getElementById("resposta");
   let caixaResultado = document.querySelector(".container__resposta");
-
+  
+const selecionado = localStorage.getItem("colunas");
+if (selecionado !== null) {
+  const radio = document.querySelector(`input[value="${selecionado}"]`);
+  if (radio){
+  radio.checked = true;
+  
+}
+} 
   if (lista.length === 0) {
     alert("Sem dados para listar!");
   } else {
+    let contaVoltas = -1;
+    
+    colunas = Number(selecionado);
+    for (var i = 0; i < lista.length; i++) {
+      contaVoltas ++;
+      
+      if(contaVoltas === colunas) {
+        caixaResultado.style.display = "block";
+        resultado.textContent+= "\n";
+        contaVoltas = 0;
+      }
     caixaResultado.style.display = "block";
-    resultado.textContent = lista;
+    resultado.textContent += lista[i]+",";
+    }
   }
 }
+
+function mostrarColunas() {
+  let resultado = document.getElementById("resposta");
+  
+  resultado.innerText = "";
+    const selecionado = document.querySelector('input[name="colunas"]:checked');
+    localStorage.setItem("colunas",selecionado.value);
+    listarDados();
+  }
 
 function manterOcorrencia() {
   let contaIguais = 0;
@@ -186,21 +217,33 @@ if (lista[0] === undefined) {
     }
     mensangemDados(1,contaIguais);
       }
+      
+function listaDados2() {
+  alert("Dados na lista 2: "+localStorage.getItem("dados2").split(","));
+}
 
 function eliminarDados() {
 
+   const verificador = !localStorage.getItem("dados2")? alert("Não a dados na lista!"): 1;
+   
+   if(verificador)
+   {
+    listaDados2();
     lista = localStorage.getItem("dados").split(",");
     lista2 = localStorage.getItem("dados2").split(",");
+   }else{
+     return verificador;
+   }
 
   // Usando filter para remover todas as ocorrências de `lista2`
   let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
-
+  
+  console.log(listaDadosFiltrados)
   mensangemDados(0,listaDadosFiltrados);
 
     }
 
-    
-    function mensangemDados(valorFuncao,valorMensagem){
+function mensangemDados(valorFuncao,valorMensagem){
       
       let recebeTamanhoDaLista = lista.length;
 
@@ -313,10 +356,6 @@ function limpaDados() {
   alert("Dados apagados!");
 }
 
-function listaDados2() {
-  alert(localStorage.getItem("dados2").split(","));
-}
-
 let btLimpaLocal = document.getElementById("limpaLocal");
 btLimpaLocal.addEventListener("click", limpaDados);
 
@@ -340,3 +379,6 @@ btEliminar.addEventListener("click", eliminarDados);
 
 let btManter = document.getElementById("umaOcorrencia");
 btManter.addEventListener("click", manterOcorrencia);
+
+let radioSelecionado = document.querySelectorAll(".botaoRadio");
+ radioSelecionado.forEach( radio=> radio.addEventListener("change",mostrarColunas));

@@ -109,7 +109,7 @@ img:hover {
 .container__resposta {
   display: none;
   color: red;
-  width: 30vw;
+/*  width: 30vw;*/
   border: solid 2px #000;
   margin: 20px;
   font-size: 20px;
@@ -117,8 +117,8 @@ img:hover {
 
 #resposta {
   font-family: var(--fonte-geral);
-  max-width: 100%;
+/*  max-width: 100%;
   white-space: pre-wrap;
-  word-wrap: break-word;
+  word-wrap: break-word;*/
   padding: 10px;
 }
