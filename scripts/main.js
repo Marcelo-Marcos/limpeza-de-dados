@@ -238,7 +238,6 @@ function eliminarDados() {
   // Usando filter para remover todas as ocorrências de `lista2`
   let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
   
-  console.log(listaDadosFiltrados)
   mensangemDados(0,listaDadosFiltrados);
 
     }
