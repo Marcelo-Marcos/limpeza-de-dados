@@ -26,7 +26,8 @@ body {
   font-size: 20px;
 }
 
-.container {
+.container, 
+.container__radio {
   display: flex;
   justify-content: space-between;
   width: 80vw;
@@ -34,6 +35,12 @@ body {
   padding: 20px 80px;
   box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
   font-size: 25px;
+}
+
+.container__radio {
+  border-radius: 20px;
+  width: 80vw;
+  padding: 10px 30px;
 }
 
 .container__botoes__Secundarios {

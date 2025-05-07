@@ -11,9 +11,11 @@ porcentagem.innerText = 0 + "%";
 window.onload = () => {
   adicionaDadosCarregamento("dados",lista);
   listarDados(lista);
-  let valor = document.getElementById("valor");
+  
+  lista2 = localStorage.getItem("dados2").split(",");
+  
   valor.value = lista[contador];
-  if (contador === 0 || contador + 1 === lista.length) {
+  if ((contador === 0) || ((contador + 1) === lista.length)) {
     contador++;
 
     resultadoPorcentagem(contador, "+", 0, lista.length);
@@ -73,7 +75,7 @@ function adicionaDados(dadosLista,listas) {
 
   console.log(valorArmazenado);
 
-  if (palavra.length > 0) {
+  if (palavra.length > 1) {
     if (!valorArmazenado) {
       adicionaDadosStringArray(listas,palavra);
       localStorage.setItem(dadosLista, listas);
@@ -89,6 +91,7 @@ function adicionaDados(dadosLista,listas) {
     palavra = valorArmazenado;
 
     alert("Insira algum dado!");
+     window.location.reload();
   }
   document.getElementById("caixa").focus();
 }
@@ -104,6 +107,10 @@ function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
 }
   
 function listarDados(listandoDados) {
+  
+  if (listandoDados.length === 0) {
+    alert("Sem dados para listar!");
+  }
 
   if (listandoDados === lista) {
     lista = localStorage.getItem("dados").split(",");
@@ -127,9 +134,7 @@ if (selecionado !== null) {
   
 }
 } 
-  if (listandoDados.length === 0) {
-    alert("Sem dados para listar!");
-  } else {
+   if(listandoDados) {
     let contaVoltas = -1;
     
     colunas = Number(selecionado);
