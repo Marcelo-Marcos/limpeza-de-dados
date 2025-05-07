@@ -9,13 +9,13 @@ let colunas = 0;
 porcentagem.innerText = 0 + "%";
 
 window.onload = () => {
-  adicionaDadosCarregamento("dados",lista);
+  adicionaDadosCarregamento("dados", lista);
   listarDados(lista);
-  
+
   lista2 = localStorage.getItem("dados2").split(",");
-  
+
   valor.value = lista[contador];
-  if ((contador === 0) || ((contador + 1) === lista.length)) {
+  if (contador === 0 || contador + 1 === lista.length) {
     contador++;
 
     resultadoPorcentagem(contador, "+", 0, lista.length);
@@ -24,9 +24,9 @@ window.onload = () => {
   } else {
     resultadoPorcentagem(contador, "+", 1, lista.length);
   }
-}
+};
 
-function adicionaDadosStringArray(valorLista,valorPalavra) {
+function adicionaDadosStringArray(valorLista, valorPalavra) {
   let controleDeFluxo = 0;
   let valor = "";
 
@@ -44,14 +44,14 @@ function adicionaDadosStringArray(valorLista,valorPalavra) {
   }
 }
 
-function adicionaDadosCarregamento(dadosLista,listas) {
+function adicionaDadosCarregamento(dadosLista, listas) {
   let valorArmazenado = localStorage.getItem(dadosLista);
 
   controladorDeRegistro = Number(localStorage.getItem("controle"));
 
   if (controladorDeRegistro !== valorArmazenado.length) {
     let palavra = valorArmazenado + " ";
-    adicionaDadosStringArray(listas,palavra);
+    adicionaDadosStringArray(listas, palavra);
 
     localStorage.setItem(dadosLista, listas);
 
@@ -60,16 +60,15 @@ function adicionaDadosCarregamento(dadosLista,listas) {
     localStorage.setItem("controle", controladorDeRegistro);
   } else {
     let palavra = valorArmazenado;
-    adicionaDadosStringArray(listas,palavra);
+    adicionaDadosStringArray(listas, palavra);
 
     localStorage.setItem(dadosLista, palavra);
-
+  }
 }
-}
 
-function adicionaDados(dadosLista,listas) {
+function adicionaDados(dadosLista, listas) {
   let palavra = document.getElementById("caixa").value;
-   palavra += " ";
+  palavra += " ";
 
   let valorArmazenado = localStorage.getItem(dadosLista);
 
@@ -77,13 +76,13 @@ function adicionaDados(dadosLista,listas) {
 
   if (palavra.length > 1) {
     if (!valorArmazenado) {
-      adicionaDadosStringArray(listas,palavra);
+      adicionaDadosStringArray(listas, palavra);
       localStorage.setItem(dadosLista, listas);
       window.location.reload();
     } else if (valorArmazenado && palavra) {
       valorArmazenado += "," + listas;
 
-      adicionaDadosStringArray(listas,palavra);
+      adicionaDadosStringArray(listas, palavra);
       localStorage.setItem(dadosLista, listas);
       window.location.reload();
     }
@@ -91,7 +90,7 @@ function adicionaDados(dadosLista,listas) {
     palavra = valorArmazenado;
 
     alert("Insira algum dado!");
-     window.location.reload();
+    window.location.reload();
   }
   document.getElementById("caixa").focus();
 }
@@ -101,13 +100,11 @@ function resultadoPorcentagem(numero1, operador1, numero2, numero3) {
     operador1 === "+"
       ? ((numero1 + numero2) / numero3) * 100
       : ((numero1 - numero2) / numero3) * 100;
-      
-  return porcentagem.innerText = RESULTADO.toFixed(2) + "%";
-  
+
+  return (porcentagem.innerText = RESULTADO.toFixed(2) + "%");
 }
-  
+
 function listarDados(listandoDados) {
-  
   if (listandoDados.length === 0) {
     alert("Sem dados para listar!");
   }
@@ -119,56 +116,55 @@ function listarDados(listandoDados) {
     lista2 = localStorage.getItem("dados2").split(",");
     listandoDados = lista2;
   }
-  
+
   let resultado = document.getElementById("resposta");
   let caixaResultado = document.querySelector(".container__resposta");
 
   resultado.innerText = "";
   caixaResultado.style.display = "none";
-  
-const selecionado = localStorage.getItem("colunas");
-if (selecionado !== null) {
-  const radio = document.querySelector(`input[value="${selecionado}"]`);
-  if (radio){
-  radio.checked = true;
-  
-}
-} 
-   if(listandoDados) {
+
+  const selecionado = localStorage.getItem("colunas");
+  if (selecionado !== null) {
+    const radio = document.querySelector(`input[value="${selecionado}"]`);
+    if (radio) {
+      radio.checked = true;
+    }
+  }
+  if (listandoDados) {
     let contaVoltas = -1;
-    
+
     colunas = Number(selecionado);
     for (var i = 0; i < listandoDados.length; i++) {
-      contaVoltas ++;
-      
-      if(contaVoltas === colunas) {
+      contaVoltas++;
+
+      if (contaVoltas === colunas) {
         caixaResultado.style.display = "block";
-        resultado.textContent+= "\n";
+        resultado.textContent += "\n";
         contaVoltas = 0;
       }
-    caixaResultado.style.display = "block";
-    resultado.textContent += listandoDados[i]+",";
+      caixaResultado.style.display = "block";
+      resultado.textContent += listandoDados[i] + ",";
     }
   }
 }
 
 function mostrarColunas() {
   let resultado = document.getElementById("resposta");
-  
+
   resultado.innerText = "";
-    const selecionado = document.querySelector('input[name="colunas"]:checked');
-    localStorage.setItem("colunas",selecionado.value);
-    listarDados(lista);
-  }
+  const selecionado = document.querySelector('input[name="colunas"]:checked');
+  localStorage.setItem("colunas", selecionado.value);
+  listarDados(lista);
+}
 
 function manterOcorrencia() {
   let contaIguais = 0;
-  
-if ((lista[0] || lista2[0]) === undefined) {
+
+  if ((lista[0] || lista2[0]) === undefined) {
     alert("Sem dados na lista!");
     return;
-  } 
-  
+  }
+
   for (let i = 0; i < lista.length; i++) {
     let valor1 = lista.indexOf(lista[i]);
     let valor2 = lista.lastIndexOf(lista[i]);
@@ -177,63 +173,61 @@ if ((lista[0] || lista2[0]) === undefined) {
       i = 0;
       contaIguais++;
     }
-    }
-    mensangemDados(1,contaIguais);
-      }
+  }
+  mensangemDados(1, contaIguais);
+}
 
 function eliminarDados() {
+  const verificador = !localStorage.getItem("dados2")
+    ? alert("Não a dados na lista!")
+    : 1;
 
-   const verificador = !localStorage.getItem("dados2")? alert("Não a dados na lista!"): 1;
-   
-   if(verificador)
-   {
+  if (verificador) {
     listarDados(lista2);
     lista = localStorage.getItem("dados").split(",");
     lista2 = localStorage.getItem("dados2").split(",");
-   }else{
-     return verificador;
-   }
+  } else {
+    return verificador;
+  }
 
   // Usando filter para remover todas as ocorrências de `lista2`
-  let listaDadosFiltrados = lista.filter(item => !lista2.includes(item));
-  
-  mensangemDados(0,listaDadosFiltrados);
+  let listaDadosFiltrados = lista.filter((item) => !lista2.includes(item));
 
+  mensangemDados(0, listaDadosFiltrados);
+}
+
+function mensangemDados(valorFuncao, valorMensagem) {
+  let recebeTamanhoDaLista = lista.length;
+
+  if (valorFuncao === 0) {
+    if (valorMensagem.length === 0) {
+      localStorage.removeItem("dados");
+      localStorage.removeItem("local");
+    } else {
+      lista = valorMensagem;
+      localStorage.setItem("dados", lista);
+
+      alert(
+        "Otimizou os dados em: " +
+          resultadoPorcentagem(
+            recebeTamanhoDaLista,
+            "-",
+            valorMensagem.length,
+            recebeTamanhoDaLista
+          )
+      );
     }
+    window.location.reload();
+  } else {
+    alert(
+      "Otimizou os dados em: " +
+        resultadoPorcentagem(valorMensagem, "+", 0, recebeTamanhoDaLista)
+    );
 
-function mensangemDados(valorFuncao,valorMensagem){
-      
-      let recebeTamanhoDaLista = lista.length;
-
-      if(valorFuncao === 0){
-
-      if (valorMensagem.length === 0) {
-        localStorage.removeItem("dados");
-        localStorage.removeItem("local");
-      }
-      else {
-    
-        lista = valorMensagem;
-        localStorage.setItem("dados", lista);
-      
-      
-          alert("Otimizou os dados em: " + resultadoPorcentagem(
-      recebeTamanhoDaLista,
-      "-",
-      valorMensagem.length,
-      recebeTamanhoDaLista
-    ))
-            }
-            window.location.reload();
-    }
-    else{
-      alert("Otimizou os dados em: " + resultadoPorcentagem(valorMensagem, "+", 0, recebeTamanhoDaLista));
-        
-          localStorage.setItem("dados", lista);
-          window.location.reload();
-    }
-  
+    localStorage.setItem("dados", lista);
+    window.location.reload();
   }
+}
 
 function proximo() {
   let valor = document.getElementById("valor");
@@ -324,13 +318,13 @@ let btAnterior = document.getElementById("anterior");
 btAnterior.addEventListener("click", anterior);
 
 let botao = document.getElementById("botao");
-botao.addEventListener("click", ()=>listarDados(lista2));
+botao.addEventListener("click", () => listarDados(lista2));
 
 let btMais = document.getElementById("botaoMais");
-btMais.addEventListener("click", () => adicionaDados("dados",lista));
+btMais.addEventListener("click", () => adicionaDados("dados", lista));
 
 let btMais2 = document.getElementById("botaoMais2");
-btMais2.addEventListener("click", () => adicionaDados("dados2",lista2));
+btMais2.addEventListener("click", () => adicionaDados("dados2", lista2));
 
 let btEliminar = document.getElementById("zeroOcorrencia");
 btEliminar.addEventListener("click", eliminarDados);
@@ -339,4 +333,6 @@ let btManter = document.getElementById("umaOcorrencia");
 btManter.addEventListener("click", manterOcorrencia);
 
 let radioSelecionado = document.querySelectorAll(".botaoRadio");
- radioSelecionado.forEach( radio=> radio.addEventListener("change",mostrarColunas));
+radioSelecionado.forEach((radio) =>
+  radio.addEventListener("change", mostrarColunas)
+);
