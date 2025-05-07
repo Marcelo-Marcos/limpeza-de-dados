@@ -43,6 +43,15 @@ body {
   padding: 10px 30px;
 }
 
+label:hover {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.botaoRadio {
+  cursor: pointer;
+}
+
 .container__botoes__Secundarios {
   display: flex;
   justify-content: space-between;

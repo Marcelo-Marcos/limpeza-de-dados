@@ -299,9 +299,11 @@ function anterior() {
 }
 
 function limpaDados() {
+  localStorage.removeItem("colunas");
+  localStorage.removeItem("controle");
   localStorage.removeItem("dados");
-  localStorage.removeItem("local");
   localStorage.removeItem("dados2");
+  localStorage.removeItem("local");
 
   window.location.reload();
 
