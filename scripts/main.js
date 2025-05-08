@@ -24,7 +24,7 @@ window.onload = () => {
   } else {
     resultadoPorcentagem(contador, "+", 1, lista.length);
   }
-};
+}
 
 function adicionaDadosStringArray(valorLista, valorPalavra) {
   let controleDeFluxo = 0;
