@@ -8,16 +8,43 @@
   --fonte-geral: font-family: "Inter", sans-serif;
 }
 
+header {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  padding: 20px 30px 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #000;
+}
+
+.icone {
+  width: 35px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--fonte-geral);
+  font-size: 20px;
+}
+
+a:hover {
+  text-shadow: 2px 2px 4px rgb(255, 255, 255);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 body {
   font-family: var(--fonte-geral);
   display: flex;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
   align-items: center;
-  gap: 20px;
-  padding: 20px 50px;
+  gap: 20px; 
   background-color: #fcfbfa;
+  margin-top: 100px;
 }
 
 #caixa {
@@ -79,11 +106,11 @@ label:hover {
   cursor: pointer;
 }
 
-img{
+.navegar{
   width: 50px;
 }
 
-img:hover {
+.navegar:hover {
   width: 55px;
 }
 
