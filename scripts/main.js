@@ -5,10 +5,15 @@ let acumulador = [];
 let porcentagem = document.getElementById("porcentagem");
 let controladorDeRegistro = 0;
 let colunas = 0;
+let zeradoAtivado = 0;
 
 porcentagem.innerText = 0 + "%";
 
 window.onload = () => {
+
+  if(zeradoAtivado){
+    ()=>adicionaDados("dados2", lista2);
+  }else{
   adicionaDadosCarregamento("dados", lista);
   listarDados(lista);
 
@@ -24,6 +29,7 @@ window.onload = () => {
   } else {
     resultadoPorcentagem(contador, "+", 1, lista.length);
   }
+}
 }
 
 function adicionaDadosStringArray(valorLista, valorPalavra) {
@@ -338,3 +344,24 @@ let radioSelecionado = document.querySelectorAll(".botaoRadio");
 radioSelecionado.forEach((radio) =>
   radio.addEventListener("change", mostrarColunas)
 );
+
+function removeCaixa() {
+  let palavra = document.getElementById("caixa");
+  let navegar = document.querySelector(".container__botoes__Secundarios");
+  let porcentagem = document.querySelector(".container__porcentagem");
+  let adicionar = document.getElementById("botaoMais");
+  let adicionar2 = document.getElementById("botaoMais2");
+  let eliminar = document.getElementById("zeroOcorrencia");
+ 
+  palavra.style.display = "none";
+  navegar.style.display = "none";
+  adicionar.style.display = "none";
+  adicionar2.style.display = "none";
+  eliminar.style.display = "none";
+  porcentagem.style.display = "none";
+
+  zeradoAtivado = 1;
+}
+
+let lkZerado = document.getElementById("zerados");
+lkZerado.addEventListener("click", removeCaixa);
