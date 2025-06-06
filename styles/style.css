@@ -26,7 +26,8 @@ body {
   font-size: 20px;
 }
 
-.container {
+.container, 
+.container__radio {
   display: flex;
   justify-content: space-between;
   width: 80vw;
@@ -34,6 +35,21 @@ body {
   padding: 20px 80px;
   box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.2);
   font-size: 25px;
+}
+
+.container__radio {
+  border-radius: 20px;
+  width: 80vw;
+  padding: 10px 30px;
+}
+
+label:hover {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.botaoRadio {
+  cursor: pointer;
 }
 
 .container__botoes__Secundarios {
@@ -109,7 +125,7 @@ img:hover {
 .container__resposta {
   display: none;
   color: red;
-  width: 30vw;
+/*  width: 30vw;*/
   border: solid 2px #000;
   margin: 20px;
   font-size: 20px;
@@ -117,8 +133,8 @@ img:hover {
 
 #resposta {
   font-family: var(--fonte-geral);
-  max-width: 100%;
+/*  max-width: 100%;
   white-space: pre-wrap;
-  word-wrap: break-word;
+  word-wrap: break-word;*/
   padding: 10px;
 }
