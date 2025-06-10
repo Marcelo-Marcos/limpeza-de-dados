@@ -118,6 +118,7 @@ function listarDados(listandoDados) {
   }
 
   let resultado = document.getElementById("resposta");
+  let totalDeItens = document.getElementById("total_itens");
   let caixaResultado = document.querySelector(".container__resposta");
 
   resultado.innerText = "";
@@ -144,8 +145,10 @@ function listarDados(listandoDados) {
       }
       caixaResultado.style.display = "block";
       resultado.textContent += listandoDados[i] + ",";
-    }
   }
+  }
+  totalDeItens.style.display = "block";
+  totalDeItens.innerText = "Total de itens: " + listandoDados.length;
 }
 
 function mostrarColunas() {
