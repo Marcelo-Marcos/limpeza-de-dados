@@ -144,3 +144,13 @@ img:hover {
   font-family: var(--fonte-geral);
   padding: 10px 10px 0 10px;
 }
+
+.verde {
+  color: green
+}
+
+.amarelo {
+  color: yellow;
+  font-style: italic;
+  font-size: 25px;
+}
