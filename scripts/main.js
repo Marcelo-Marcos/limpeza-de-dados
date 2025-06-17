@@ -90,7 +90,7 @@ function adicionaDados(dadosLista, listas) {
     palavra = valorArmazenado;
 
     alert("Insira algum dado!");
-    window.location.reload();
+    // window.location.reload();
   }
   document.getElementById("caixa").focus();
 }
