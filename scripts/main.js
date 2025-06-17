@@ -90,7 +90,6 @@ function adicionaDados(dadosLista, listas) {
     palavra = valorArmazenado;
 
     alert("Insira algum dado!");
-    // window.location.reload();
   }
   document.getElementById("caixa").focus();
 }
@@ -132,45 +131,41 @@ function listarDados(listandoDados) {
     }
   }
   if (listandoDados) {
+    const quebraLinha = document.createElement("br");
     let contaVoltas = -1;
+    let contaElementos = -1;
 
     colunas = Number(selecionado);
     for (var i = 0; i < listandoDados.length; i++) {
       contaVoltas++;
+      contaElementos++;
 
       if (contaVoltas === colunas) {
         caixaResultado.style.display = "block";
-        resultado.textContent += "\n";
+        resultado.innerHTML += "<br/>";
         contaVoltas = 0;
       }
       caixaResultado.style.display = "block";
-      //Bloqueio___________________________________________________________________
-      // resultado.textContent += listandoDados[i] + ",";
 
-      //____________________________________________________________________________
       const spanNormal = document.createElement("span");
       const spanAmarelo = document.createElement("span");
       const spanVerde = document.createElement("span");
-      console.log("Conta voltas"+contaVoltas);
-      console.log("Contador"+contador);
-      if (contaVoltas < contador) {
+
+      if (contaElementos < contador) {
         spanVerde.className = "verde";
         spanVerde.textContent = listandoDados[i] + ",";
         resultado.appendChild(spanVerde);
       }
-      if (contaVoltas  === contador) {
+      if (contaElementos === contador) {
         spanAmarelo.className = "amarelo";
         spanAmarelo.textContent = listandoDados[i] + ",";
         resultado.appendChild(spanAmarelo);
       }
-      if (contaVoltas > contador) {
-      spanNormal.textContent = listandoDados[i] + ",";
+      if (contaElementos > contador) {
+        spanNormal.textContent = listandoDados[i] + ",";
         resultado.appendChild(spanNormal);
-  }
-  //________________________________________________________________________________
-
-
-  }
+      }
+    }
   }
   totalDeItens.style.display = "block";
   totalDeItens.innerText = "Total de itens: " + listandoDados.length;
