@@ -118,6 +118,7 @@ function listarDados(listandoDados) {
   }
 
   let resultado = document.getElementById("resposta");
+  let totalDeItens = document.getElementById("total_itens");
   let caixaResultado = document.querySelector(".container__resposta");
 
   resultado.innerText = "";
@@ -143,9 +144,36 @@ function listarDados(listandoDados) {
         contaVoltas = 0;
       }
       caixaResultado.style.display = "block";
-      resultado.textContent += listandoDados[i] + ",";
-    }
+      //Bloqueio___________________________________________________________________
+      // resultado.textContent += listandoDados[i] + ",";
+
+      //____________________________________________________________________________
+      const spanNormal = document.createElement("span");
+      const spanAmarelo = document.createElement("span");
+      const spanVerde = document.createElement("span");
+      console.log("Conta voltas"+contaVoltas);
+      console.log("Contador"+contador);
+      if (contaVoltas < contador) {
+        spanVerde.className = "verde";
+        spanVerde.textContent = listandoDados[i] + ",";
+        resultado.appendChild(spanVerde);
+      }
+      if (contaVoltas  === contador) {
+        spanAmarelo.className = "amarelo";
+        spanAmarelo.textContent = listandoDados[i] + ",";
+        resultado.appendChild(spanAmarelo);
+      }
+      if (contaVoltas > contador) {
+      spanNormal.textContent = listandoDados[i] + ",";
+        resultado.appendChild(spanNormal);
   }
+  //________________________________________________________________________________
+
+
+  }
+  }
+  totalDeItens.style.display = "block";
+  totalDeItens.innerText = "Total de itens: " + listandoDados.length;
 }
 
 function mostrarColunas() {
@@ -262,6 +290,7 @@ function proximo() {
     valor.value = lista[contador];
   }
 
+  listarDados(lista);
   valor.focus();
   valor.select();
 }
@@ -294,6 +323,7 @@ function anterior() {
   if (lista.length > 0) {
     valor.value = lista[contador];
   }
+  listarDados(lista);
   valor.focus();
   valor.select();
 }
