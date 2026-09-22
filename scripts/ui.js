@@ -20,8 +20,49 @@ class UI {
     this.cacheElements();
     this.bindEvents();
     this.bindKeyboardShortcuts();
+    this.initTheme(); // Inicializa tema
     this.unsubscribe = this.store.subscribe(state => this.render(state));
     this.render(this.store.getState());
+  }
+
+  /**
+   * Inicializa tema (claro/escuro) baseado no localStorage ou preferência do sistema
+   */
+  initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+      document.documentElement.classList.toggle('dark-mode', savedTheme === 'dark');
+      document.documentElement.classList.toggle('light-mode', savedTheme === 'light');
+    } else if (prefersDark) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.add('light-mode');
+    }
+    
+    // Atualiza ícone do botão
+    this.updateThemeIcon();
+  }
+
+  /**
+   * Alterna entre tema claro e escuro
+   */
+  toggleTheme() {
+    const isDark = document.documentElement.classList.toggle('dark-mode');
+    document.documentElement.classList.toggle('light-mode', !isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    this.updateThemeIcon();
+    this.showToast(isDark ? 'Modo escuro ativado' : 'Modo claro ativado', 'info');
+  }
+
+  /**
+   * Atualiza ícone do botão de tema
+   */
+  updateThemeIcon() {
+    const isDark = document.documentElement.classList.contains('dark-mode');
+    this.elements.themeToggle.setAttribute('aria-label', isDark ? 'Alternar para modo claro' : 'Alternar para modo escuro');
+    this.elements.themeToggle.title = isDark ? 'Alternar para modo claro' : 'Alternar para modo escuro';
   }
 
   /**
@@ -50,9 +91,13 @@ class UI {
       
       // Resultados
       resultsSection: document.getElementById('results-section'),
-      resultsOutput: document.getElementById('results-output'),
+      resultsTable: document.getElementById('results-table'),
+      resultsTableWrapper: document.getElementById('results-table-wrapper'),
+      resultsThead: document.getElementById('results-thead'),
+      resultsTbody: document.getElementById('results-tbody'),
       resultsEmpty: document.getElementById('results-empty'),
       totalItems: document.getElementById('total-items'),
+      btnExport: document.getElementById('btn-export'),
       
       // Progresso
       progressFill: document.getElementById('progress-fill'),
@@ -61,6 +106,9 @@ class UI {
       
       // Toast container
       toastContainer: document.getElementById('toast-container'),
+      
+      // Theme toggle
+      themeToggle: document.getElementById('theme-toggle'),
     };
   }
 
@@ -99,6 +147,12 @@ class UI {
     elements.btnKeepOne.addEventListener('click', () => this.handleKeepOne());
     elements.btnRemoveAll.addEventListener('click', () => this.handleRemoveAll());
     elements.btnClear.addEventListener('click', () => this.handleClear());
+    
+    // Theme toggle
+    elements.themeToggle.addEventListener('click', () => this.toggleTheme());
+    
+    // Exportar planilha
+    elements.btnExport.addEventListener('click', () => this.handleExport());
     
     // Foco no input ao carregar
     elements.dataInput.focus();
@@ -189,6 +243,9 @@ class UI {
       this.announceToScreenReader(
         `Item ${result.index + 1} de ${result.total}: ${result.value}`
       );
+      
+      // Scroll para o item atual na tabela
+      this.scrollToCurrentItem();
     } else {
       this.showToast(result.error, 'warning');
       if (result.atEnd || result.atStart) {
@@ -198,12 +255,46 @@ class UI {
   }
 
   /**
+   * Scroll para o item atual na tabela
+   * Rola apenas o wrapper da tabela (não a página)
+   */
+  scrollToCurrentItem() {
+    const { elements } = this;
+
+    requestAnimationFrame(() => {
+      const target = elements.resultsTbody.querySelector('.is-current');
+      const wrapper = elements.resultsTableWrapper;
+
+      if (!target || !wrapper) return;
+
+      const targetRect = target.getBoundingClientRect();
+      const wrapperRect = wrapper.getBoundingClientRect();
+
+      // Centraliza horizontalmente
+      const deltaX = (targetRect.left + targetRect.width / 2) -
+                     (wrapperRect.left + wrapperRect.width / 2);
+      // Centraliza verticalmente
+      const deltaY = (targetRect.top + targetRect.height / 2) -
+                     (wrapperRect.top + wrapperRect.height / 2);
+
+      wrapper.scrollTo({
+        left: wrapper.scrollLeft + deltaX,
+        top: wrapper.scrollTop + deltaY,
+        behavior: 'smooth',
+      });
+    });
+  }
+
+  /**
    * Define número de colunas
    */
   handleSetColumns(columns) {
     const result = this.store.setColumns(columns);
     if (result.success) {
       this.showToast(`Exibição alterada para ${columns} coluna(s)`, 'info');
+      
+      // Scroll para o item atual após mudança de layout
+      this.scrollToCurrentItem();
     }
   }
 
@@ -276,6 +367,131 @@ class UI {
     }, 100);
   }
 
+  // ===== EXPORTAÇÃO =====
+
+  /**
+   * Exporta a tabela de resultados como planilha CSV.
+   * Reproduz exatamente o layout exibido: blocos "Coluna N" com ID + CÓDIGO.
+   * Usa separador ";" e BOM UTF-8 para compatibilidade com Excel pt-BR.
+   */
+  handleExport() {
+    const { elements } = this;
+    const state = this.store.getState();
+    const data = state.coluna1;
+    const columns = state.columns;
+
+    if (data.length === 0) {
+      this.showToast('Nenhum dado para exportar', 'warning');
+      return;
+    }
+
+    this.setButtonLoading(elements.btnExport, true);
+
+    setTimeout(() => {
+      try {
+        const rows = this.buildExportRows(data, columns);
+        const csv = rows
+          .map(row => row.map(cell => this.csvCell(cell)).join(';'))
+          .join('\r\n');
+
+        // BOM para o Excel reconhecer UTF-8 (acentos corretos)
+        const content = '\ufeff' + csv;
+        const filename = `resultado-${columns}col-${this.exportTimestamp()}.csv`;
+
+        this.downloadFile(content, filename, 'text/csv;charset=utf-8;');
+
+        this.setButtonLoading(elements.btnExport, false);
+        this.showToast(`Planilha exportada: ${data.length} item(ns)`, 'success');
+        this.announceToScreenReader(
+          `Exportação concluída. Arquivo ${filename} gerado com ${data.length} itens.`
+        );
+      } catch (error) {
+        this.setButtonLoading(elements.btnExport, false);
+        this.showToast('Erro ao exportar a planilha', 'error');
+        console.error('Erro na exportação:', error);
+      }
+    }, 100);
+  }
+
+  /**
+   * Monta as linhas da planilha replicando a tabela de resultados
+   * @returns {Array<Array<string>>}
+   */
+  buildExportRows(data, columns) {
+    const rows = [];
+
+    // Linha 1: grupos "Coluna N" (célula mesclada -> nome + vazio)
+    const groupRow = [];
+    for (let c = 0; c < columns; c++) {
+      groupRow.push(`Coluna ${c + 1}`, '');
+    }
+    rows.push(groupRow);
+
+    // Linha 2: rótulos ID / CÓDIGO
+    const labelRow = [];
+    for (let c = 0; c < columns; c++) {
+      labelRow.push('ID', 'CÓDIGO');
+    }
+    rows.push(labelRow);
+
+    // Linhas de dados (com preenchimento vazio na última linha)
+    for (let rowStart = 0; rowStart < data.length; rowStart += columns) {
+      const row = [];
+      for (let c = 0; c < columns; c++) {
+        const idx = rowStart + c;
+        if (idx < data.length) {
+          row.push(String(idx + 1), data[idx]);
+        } else {
+          row.push('', '');
+        }
+      }
+      rows.push(row);
+    }
+
+    return rows;
+  }
+
+  /**
+   * Escapa uma célula para CSV (aspas duplicadas quando necessário)
+   */
+  csvCell(value) {
+    const str = value === null || value === undefined ? '' : String(value);
+    if (/[";\r\n]/.test(str)) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  }
+
+  /**
+   * Timestamp para nome do arquivo: YYYY-MM-DD_HH-MM-SS
+   */
+  exportTimestamp() {
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}` +
+           `_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+  }
+
+  /**
+   * Dispara o download de um arquivo no navegador
+   */
+  downloadFile(content, filename, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Libera a memória
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
   // ===== RENDERIZAÇÃO =====
 
   /**
@@ -314,17 +530,18 @@ class UI {
   }
 
   /**
-   * Renderiza área de resultados
+   * Renderiza área de resultados (tabela)
    */
   renderResults(state) {
     const { elements } = this;
     const data = state.coluna1;
     const columns = state.columns;
+    const currentIndex = state.currentIndex;
     
     if (data.length === 0) {
       elements.resultsSection.hidden = true;
       elements.resultsEmpty.hidden = false;
-      elements.resultsOutput.textContent = '';
+      elements.resultsTbody.innerHTML = '';
       elements.totalItems.textContent = 'Total: 0 itens';
       return;
     }
@@ -333,60 +550,80 @@ class UI {
     elements.resultsEmpty.hidden = true;
     elements.totalItems.textContent = `Total: ${data.length} item(ns)`;
     
-    // Formata saída em colunas
-    const formatted = this.formatColumns(data, columns);
-    elements.resultsOutput.textContent = formatted;
+    // Atualiza atributo data-columns para controlar layout CSS
+    elements.resultsTable.setAttribute('data-columns', columns);
     
-    // Destaca item atual
-    this.highlightCurrentItem(state.currentIndex, columns);
+    // Renderiza tabela
+    this.renderTable(data, columns, currentIndex);
   }
 
   /**
-   * Formata array em colunas
+   * Renderiza tabela de resultados
+   * Estrutura idêntica ao modelo da planilha:
+   *   |      Coluna 1      |      Coluna 2      | ...
+   *   |  ID  |   CÓDIGO     |  ID  |   CÓDIGO    | ...
+   *   |  1   |   154665     |  2   |   526899    | ...
    */
-  formatColumns(data, columns) {
-    if (columns === 1) {
-      return data.map((item, i) => `${i + 1}. ${item}`).join('\n');
-    }
-    
-    const rows = [];
-    for (let i = 0; i < data.length; i += columns) {
-      const row = data.slice(i, i + columns);
-      rows.push(row.map((item, j) => `${i + j + 1}. ${item}`).join('  |  '));
-    }
-    return rows.join('\n');
+  renderTable(data, columns, currentIndex) {
+    const { elements } = this;
+
+    this.renderTableHead(columns);
+    this.renderTableBody(data, columns, currentIndex);
   }
 
   /**
-   * Destaca item atual na saída (via span com classe)
-   * Nota: Como usamos textContent, não podemos destacar facilmente.
-   * Alternativa: usar innerHTML com spans coloridos.
+   * Renderiza o cabeçalho da tabela (2 linhas: grupos + ID/CÓDIGO)
    */
-  highlightCurrentItem(currentIndex, columns) {
-    const { resultsOutput } = this.elements;
-    const data = this.store.getState().coluna1;
-    
-    if (data.length === 0) return;
-    
-    // Reconstrói com destaque no item atual
+  renderTableHead(columns) {
+    const { elements } = this;
+
+    let groupsRow = '';
+    let labelsRow = '';
+
+    for (let c = 0; c < columns; c++) {
+      groupsRow += `<th class="col-group" colspan="2" scope="colgroup">Coluna ${c + 1}</th>`;
+      labelsRow += `<th class="col-id" scope="col">ID</th>`;
+      labelsRow += `<th class="col-code" scope="col">CÓDIGO</th>`;
+    }
+
+    elements.resultsThead.innerHTML = `
+      <tr class="results__head-groups">${groupsRow}</tr>
+      <tr class="results__head-labels">${labelsRow}</tr>
+    `;
+  }
+
+  /**
+   * Renderiza o corpo da tabela.
+   * Os itens fluem horizontalmente entre os blocos "Coluna N"
+   * e quebram para a próxima linha ao completar o número de colunas.
+   */
+  renderTableBody(data, columns, currentIndex) {
+    const { elements } = this;
     let html = '';
-    for (let i = 0; i < data.length; i += columns) {
-      const rowItems = [];
-      for (let j = 0; j < columns && (i + j) < data.length; j++) {
-        const idx = i + j;
-        const item = data[idx];
-        const prefix = `${idx + 1}. `;
-        
-        if (idx === currentIndex) {
-          rowItems.push(`<span class="highlight-current">${prefix}${this.escapeHtml(item)}</span>`);
+
+    for (let rowStart = 0; rowStart < data.length; rowStart += columns) {
+      let rowHtml = '';
+
+      for (let c = 0; c < columns; c++) {
+        const idx = rowStart + c;
+        const hasItem = idx < data.length;
+        const isCurrent = hasItem && idx === currentIndex;
+        const currentClass = isCurrent ? ' is-current' : '';
+
+        if (hasItem) {
+          rowHtml += `<td class="cell-index${currentClass}">${idx + 1}</td>`;
+          rowHtml += `<td class="cell-code${currentClass}">${this.escapeHtml(data[idx])}</td>`;
         } else {
-          rowItems.push(`${prefix}${this.escapeHtml(item)}`);
+          // Células vazias para completar a linha (como na planilha)
+          rowHtml += `<td class="cell-index cell-empty" aria-hidden="true"></td>`;
+          rowHtml += `<td class="cell-code cell-empty" aria-hidden="true"></td>`;
         }
       }
-      html += rowItems.join('  |  ') + '\n';
+
+      html += `<tr>${rowHtml}</tr>`;
     }
-    
-    resultsOutput.innerHTML = html;
+
+    elements.resultsTbody.innerHTML = html;
   }
 
   /**
@@ -432,6 +669,7 @@ class UI {
     elements.btnKeepOne.disabled = !hasCol1Data;
     elements.btnRemoveAll.disabled = !hasCol1Data || !hasCol2Data;
     elements.btnClear.disabled = !hasCol1Data && !hasCol2Data;
+    elements.btnExport.disabled = !hasCol1Data;
   }
 
   // ===== FEEDBACK VISUAL =====

@@ -130,9 +130,42 @@
   --sidebar-width: 280px;
 }
 
-/* ===== MODO ESCURO (opcional - preparação) ===== */
+/* ===== MODO ESCURO ===== */
+/* Controlado via classes .dark-mode / .light-mode no <html> */
+html.dark-mode {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-hover: #334155;
+  --color-border: #334155;
+  --color-border-strong: #475569;
+  --color-text: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-primary-light: #1e3a5f;
+  --color-success-light: #14532d;
+  --color-danger-light: #7f1d1d;
+  --color-warning-light: #7c2d12;
+}
+
+/* Modo claro explícito (para sobrescrever prefers-color-scheme) */
+html.light-mode {
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f9fafb;
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
+  --color-primary-light: #dbeafe;
+  --color-success-light: #dcfce7;
+  --color-danger-light: #fee2e2;
+  --color-warning-light: #ffedd5;
+}
+
+/* Preferência do sistema (aplica apenas se NÃO houver escolha explícita do usuário) */
 @media (prefers-color-scheme: dark) {
-  :root[data-theme="dark"] {
+  html:not(.dark-mode):not(.light-mode) {
     --color-bg: #0f172a;
     --color-surface: #1e293b;
     --color-surface-hover: #334155;
@@ -145,6 +178,23 @@
     --color-success-light: #14532d;
     --color-danger-light: #7f1d1d;
     --color-warning-light: #7c2d12;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html:not(.dark-mode):not(.light-mode) {
+    --color-bg: #fafafa;
+    --color-surface: #ffffff;
+    --color-surface-hover: #f9fafb;
+    --color-border: #e5e7eb;
+    --color-border-strong: #d1d5db;
+    --color-text: #111827;
+    --color-text-secondary: #4b5563;
+    --color-text-muted: #9ca3af;
+    --color-primary-light: #dbeafe;
+    --color-success-light: #dcfce7;
+    --color-danger-light: #fee2e2;
+    --color-warning-light: #ffedd5;
   }
 }
 

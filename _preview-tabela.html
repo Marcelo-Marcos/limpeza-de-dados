@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prévia - Tabela de Resultados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@400..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header"><h1 class="app__title">Prévia da Tabela</h1></header>
+    
+    <section class="app__results" style="margin-bottom:32px">
+      <header class="results__header">
+        <h2 class="results__title">Modo 1 coluna (item 1 destacado)</h2>
+        <div class="results__actions">
+          <span class="badge">Total: 7 item(ns)</span>
+          <button type="button" class="btn btn--primary btn--sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar
+          </button>
+        </div>
+      </header>
+      <div class="results__table-wrapper">
+        <table class="results__table" data-columns="1">
+          <thead><tr class="results__head-groups"><th class="col-group" colspan="2" scope="colgroup">Coluna 1</th></tr><tr class="results__head-labels"><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th></tr></thead>
+          <tbody><tr><td class="cell-index is-current">1</td><td class="cell-code is-current">154665</td></tr><tr><td class="cell-index">2</td><td class="cell-code">526899</td></tr><tr><td class="cell-index">3</td><td class="cell-code">111111</td></tr><tr><td class="cell-index">4</td><td class="cell-code">222222</td></tr><tr><td class="cell-index">5</td><td class="cell-code">333333</td></tr><tr><td class="cell-index">6</td><td class="cell-code">444444</td></tr><tr><td class="cell-index">7</td><td class="cell-code">555555</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  
+    
+    <section class="app__results" style="margin-bottom:32px">
+      <header class="results__header">
+        <h2 class="results__title">Modo 5 colunas (item 4 destacado)</h2>
+        <div class="results__actions">
+          <span class="badge">Total: 7 item(ns)</span>
+          <button type="button" class="btn btn--primary btn--sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar
+          </button>
+        </div>
+      </header>
+      <div class="results__table-wrapper">
+        <table class="results__table" data-columns="5">
+          <thead><tr class="results__head-groups"><th class="col-group" colspan="2" scope="colgroup">Coluna 1</th><th class="col-group" colspan="2" scope="colgroup">Coluna 2</th><th class="col-group" colspan="2" scope="colgroup">Coluna 3</th><th class="col-group" colspan="2" scope="colgroup">Coluna 4</th><th class="col-group" colspan="2" scope="colgroup">Coluna 5</th></tr><tr class="results__head-labels"><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th></tr></thead>
+          <tbody><tr><td class="cell-index">1</td><td class="cell-code">154665</td><td class="cell-index">2</td><td class="cell-code">526899</td><td class="cell-index">3</td><td class="cell-code">111111</td><td class="cell-index is-current">4</td><td class="cell-code is-current">222222</td><td class="cell-index">5</td><td class="cell-code">333333</td></tr><tr><td class="cell-index">6</td><td class="cell-code">444444</td><td class="cell-index">7</td><td class="cell-code">555555</td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  
+    
+    <section class="app__results" style="margin-bottom:32px">
+      <header class="results__header">
+        <h2 class="results__title">Modo 10 colunas (item 7 destacado)</h2>
+        <div class="results__actions">
+          <span class="badge">Total: 7 item(ns)</span>
+          <button type="button" class="btn btn--primary btn--sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar
+          </button>
+        </div>
+      </header>
+      <div class="results__table-wrapper">
+        <table class="results__table" data-columns="10">
+          <thead><tr class="results__head-groups"><th class="col-group" colspan="2" scope="colgroup">Coluna 1</th><th class="col-group" colspan="2" scope="colgroup">Coluna 2</th><th class="col-group" colspan="2" scope="colgroup">Coluna 3</th><th class="col-group" colspan="2" scope="colgroup">Coluna 4</th><th class="col-group" colspan="2" scope="colgroup">Coluna 5</th><th class="col-group" colspan="2" scope="colgroup">Coluna 6</th><th class="col-group" colspan="2" scope="colgroup">Coluna 7</th><th class="col-group" colspan="2" scope="colgroup">Coluna 8</th><th class="col-group" colspan="2" scope="colgroup">Coluna 9</th><th class="col-group" colspan="2" scope="colgroup">Coluna 10</th></tr><tr class="results__head-labels"><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th></tr></thead>
+          <tbody><tr><td class="cell-index">1</td><td class="cell-code">154665</td><td class="cell-index">2</td><td class="cell-code">526899</td><td class="cell-index">3</td><td class="cell-code">111111</td><td class="cell-index">4</td><td class="cell-code">222222</td><td class="cell-index">5</td><td class="cell-code">333333</td><td class="cell-index">6</td><td class="cell-code">444444</td><td class="cell-index is-current">7</td><td class="cell-code is-current">555555</td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  
+    
+    <section class="app__results" style="margin-bottom:32px">
+      <header class="results__header">
+        <h2 class="results__title">Modo 20 colunas (item 1 destacado)</h2>
+        <div class="results__actions">
+          <span class="badge">Total: 7 item(ns)</span>
+          <button type="button" class="btn btn--primary btn--sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar
+          </button>
+        </div>
+      </header>
+      <div class="results__table-wrapper">
+        <table class="results__table" data-columns="20">
+          <thead><tr class="results__head-groups"><th class="col-group" colspan="2" scope="colgroup">Coluna 1</th><th class="col-group" colspan="2" scope="colgroup">Coluna 2</th><th class="col-group" colspan="2" scope="colgroup">Coluna 3</th><th class="col-group" colspan="2" scope="colgroup">Coluna 4</th><th class="col-group" colspan="2" scope="colgroup">Coluna 5</th><th class="col-group" colspan="2" scope="colgroup">Coluna 6</th><th class="col-group" colspan="2" scope="colgroup">Coluna 7</th><th class="col-group" colspan="2" scope="colgroup">Coluna 8</th><th class="col-group" colspan="2" scope="colgroup">Coluna 9</th><th class="col-group" colspan="2" scope="colgroup">Coluna 10</th><th class="col-group" colspan="2" scope="colgroup">Coluna 11</th><th class="col-group" colspan="2" scope="colgroup">Coluna 12</th><th class="col-group" colspan="2" scope="colgroup">Coluna 13</th><th class="col-group" colspan="2" scope="colgroup">Coluna 14</th><th class="col-group" colspan="2" scope="colgroup">Coluna 15</th><th class="col-group" colspan="2" scope="colgroup">Coluna 16</th><th class="col-group" colspan="2" scope="colgroup">Coluna 17</th><th class="col-group" colspan="2" scope="colgroup">Coluna 18</th><th class="col-group" colspan="2" scope="colgroup">Coluna 19</th><th class="col-group" colspan="2" scope="colgroup">Coluna 20</th></tr><tr class="results__head-labels"><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th><th class="col-id" scope="col">ID</th><th class="col-code" scope="col">CÓDIGO</th></tr></thead>
+          <tbody><tr><td class="cell-index is-current">1</td><td class="cell-code is-current">154665</td><td class="cell-index">2</td><td class="cell-code">526899</td><td class="cell-index">3</td><td class="cell-code">111111</td><td class="cell-index">4</td><td class="cell-code">222222</td><td class="cell-index">5</td><td class="cell-code">333333</td><td class="cell-index">6</td><td class="cell-code">444444</td><td class="cell-index">7</td><td class="cell-code">555555</td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td><td class="cell-index cell-empty" aria-hidden="true"></td><td class="cell-code cell-empty" aria-hidden="true"></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  
+  </main>
+</body>
+</html>

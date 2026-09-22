@@ -33,6 +33,30 @@
     <header class="app__header">
       <h1 class="app__title">Otimizador de Dados</h1>
       
+      <!-- Dark Mode Toggle -->
+      <button 
+        type="button" 
+        class="theme-toggle" 
+        id="theme-toggle"
+        aria-label="Alternar modo escuro"
+        title="Alternar tema (claro/escuro)"
+      >
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+
       <!-- Barra de progresso -->
       <div class="app__progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do processamento">
         <div class="app__progress-bar">
@@ -254,9 +278,30 @@
     >
       <header class="results__header">
         <h2 id="results-title" class="results__title">Resultado</h2>
-        <span id="total-items" class="badge" aria-live="polite">Total: 0 itens</span>
+        <div class="results__actions">
+          <span id="total-items" class="badge" aria-live="polite">Total: 0 itens</span>
+          <button
+            type="button"
+            class="btn btn--primary btn--sm"
+            id="btn-export"
+            aria-label="Exportar tabela de resultados como planilha CSV"
+            title="Exportar como planilha (CSV)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar
+          </button>
+        </div>
       </header>
-      <pre id="results-output" class="results__output" aria-label="Lista de itens processados"></pre>
+      <div class="results__table-wrapper" id="results-table-wrapper">
+        <table id="results-table" class="results__table" aria-label="Lista de itens processados" data-columns="5">
+          <thead id="results-thead"></thead>
+          <tbody id="results-tbody"></tbody>
+        </table>
+      </div>
       <div id="results-empty" class="results__empty" hidden>
         <span class="results__empty-icon" aria-hidden="true">📭</span>
         <p>Nenhum dado para exibir</p>
