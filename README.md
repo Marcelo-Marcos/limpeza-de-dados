@@ -29,21 +29,3 @@ O **Otimizador de Dados 20.14** é uma aplicação web single-page (SPA) desenvo
 | **Atalhos de Teclado** | Operações rápidas sem mouse |
 | **Notificações Toast** | Feedback visual para ações e erros |
 | **Acessibilidade Completa** | ARIA, skip links, foco visível, leitores de tela |
-
----
-
-## 🚀 Demonstração Rápida
-
-```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/limpeza-de-dados.git
-cd limpeza-de-dados
-
-# Abra no navegador (não requer servidor)
-open index.html
-# ou
-xdg-open index.html
-# ou simplesmente dê duplo-clique no index.html
-```
-
-> **Nota:** Por ser uma aplicação client-side pura, funciona abrindo o `index.html` diretamente no navegador. Para desenvolvimento, recomenda-se usar um servidor local (ex: `npx serve` ou extensão Live Server do VS Code).
