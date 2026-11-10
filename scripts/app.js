@@ -7,14 +7,59 @@
  * ========================================
  */
 
+// Copia o item atual quando o usuário navega pelos botões Próximo/Anterior.
+function copiarTexto(texto) {
+  if (!texto) return;
+
+  const copiarComFallback = () => {
+    const campoTemporario = document.createElement('textarea');
+    campoTemporario.value = texto;
+    campoTemporario.setAttribute('readonly', '');
+    campoTemporario.style.position = 'fixed';
+    campoTemporario.style.left = '-9999px';
+    campoTemporario.style.top = '0';
+    document.body.appendChild(campoTemporario);
+    campoTemporario.focus();
+    campoTemporario.select();
+
+    let copiado = false;
+    try {
+      copiado = document.execCommand('copy');
+    } catch (erro) {
+      console.warn('Não foi possível copiar automaticamente:', erro);
+    }
+
+    campoTemporario.remove();
+    if (!copiado) {
+      console.warn('A cópia automática não foi suportada por este navegador.');
+    }
+  };
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(texto).catch(copiarComFallback);
+  } else {
+    copiarComFallback();
+  }
+}
+
 // Aguarda DOM pronto
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializa Store (já criada em store.js como singleton)
   const store = window.store;
-  
+
   // Inicializa UI
   const ui = new window.UI(store);
-  
+
+  // A cópia é acionada pelo clique, aproveitando a permissão temporária do navegador.
+  [ui.elements.btnPrev, ui.elements.btnNext].forEach((botao) => {
+    botao.addEventListener('click', () => {
+      const valorAtual = store.getCurrentItem();
+      if (valorAtual !== null) {
+        copiarTexto(String(valorAtual));
+      }
+    });
+  });
+
   // Expõe para debug no console
   window.app = {
     store,
@@ -27,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     clearAll: () => store.clearAll(),
   };
-  
+
   // Log de boas-vindas no console
   console.log('%c🚀 Otimizador de Dados 20.14', 'font-size: 16px; font-weight: bold; color: #2563eb;');
   console.log('%cComandos de debug disponíveis em window.app:', 'color: #6b7280;');
@@ -41,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('  Ctrl+D         Eliminar duplicatas');
   console.log('  Ctrl+Delete    Limpar tudo');
   console.log('  Escape         Focar input');
-  
+
   // Verifica se há dados migrados e avisa
   const state = store.getState();
   if (state.coluna1.length > 0 || state.coluna2.length > 0) {
