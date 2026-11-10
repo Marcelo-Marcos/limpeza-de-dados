@@ -252,6 +252,43 @@ function mensangemDados(valorFuncao, valorMensagem) {
   }
 }
 
+// Dá foco ao input, seleciona o texto e já copia para a área de transferência.
+// O setTimeout garante que rode depois do alert() e do foco padrão do botão clicado.
+function focarValor() {
+  const campo = document.getElementById("valor");
+  if (!campo) return;
+
+  setTimeout(() => {
+    campo.focus();
+    campo.select();
+    // Fallback para mobile/iOS, onde select() sozinho nem sempre funciona
+    campo.setSelectionRange(0, campo.value.length);
+
+    copiarValor(campo);
+  }, 0);
+}
+
+// Copia o conteúdo do input. Usa a Clipboard API (precisa de HTTPS ou localhost)
+// e, se falhar, cai no execCommand, que funciona também em HTTP/arquivo local.
+function copiarValor(campo) {
+  if (!campo.value) return;
+
+  const copiaAntiga = () => {
+    try {
+      campo.select();
+      document.execCommand("copy");
+    } catch (erro) {
+      console.warn("Não foi possível copiar automaticamente:", erro);
+    }
+  };
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(campo.value).catch(copiaAntiga);
+  } else {
+    copiaAntiga();
+  }
+}
+
 function proximo() {
   let valor = document.getElementById("valor");
 
@@ -286,8 +323,7 @@ function proximo() {
   }
 
   listarDados(lista);
-  valor.focus();
-  valor.select();
+  focarValor();
 }
 
 function anterior() {
@@ -319,8 +355,7 @@ function anterior() {
     valor.value = lista[contador];
   }
   listarDados(lista);
-  valor.focus();
-  valor.select();
+  focarValor();
 }
 
 function limpaDados() {
